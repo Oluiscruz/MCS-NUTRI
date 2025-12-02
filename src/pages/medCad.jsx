@@ -7,12 +7,12 @@ import '../styles/medCadastro.scss'
 
 export default function MedicoCadastro() {
 
-    const [ nome, setNome ] = useState('');
-    const [ telefone, setTelefone ] = useState('');
-    const [ sexo, setSexo ] = useState('');
-    const [ crm, setCRM ] = useState('');
-    const [ email, setEmail ] = useState('');
-    const [ senha, setSenha ] = useState('');
+    const [nome, setNome] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [sexo, setSexo] = useState('');
+    const [crm, setCRM] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
     const navigate = useNavigate();
 
     const voltarInicio = (e) => {
@@ -29,10 +29,10 @@ export default function MedicoCadastro() {
             sexo,
             crm,
             email,
-            senha_paciente: senha
+            senha_medico: senha
         };
         try {
-            const response = await axios.post('/api/pacientes/cadastro', dadosMedico);
+            const response = await axios.post('/api/medico/cadastro', dadosMedico);
             alert(`✅ ${response.data.message}`);
             navigate('/medico/login');
 
@@ -60,17 +60,20 @@ export default function MedicoCadastro() {
                     <div className="lado1">
 
                         <label><span>*</span>Nome</label>
-                        <input type="name" placeholder='Seu nome'
+                        <input type="name"
+                            placeholder='Seu nome'
                             value={nome}
                             onChange={(e) => setNome(e.target.value)} />
 
                         <label><span>*</span>Telefone</label>
-                        <input type="text" placeholder='(00) 00000-0000'
+                        <input type="text"
+                            placeholder='(00) 00000-0000'
                             value={telefone}
                             onChange={(e) => setTelefone(e.target.value)} />
 
                         <label><span>*</span>Sexo</label>
-                        <select name="sexo" id=""
+                        <select name="sexo"
+                            id=""
                             value={sexo}
                             onChange={(e) => setSexo(e.target.value)}>
                             <option value="M">Masculino</option>
@@ -82,17 +85,20 @@ export default function MedicoCadastro() {
                     <div className="lado2">
 
                         <label><span>*</span>CRM</label>
-                        <input type="text" placeholder='00000000-SP'
+                        <input type="text"
+                            placeholder='00000000-SP'
                             value={crm}
                             onChange={(e) => setCRM(e.target.value)} />
 
                         <label><span>*</span>Email</label>
-                        <input type="email" placeholder='exemplo@email.com'
+                        <input type="email"
+                            placeholder='exemplo@email.com'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)} />
 
                         <label><span>*</span>Senha</label>
-                        <input type="password" placeholder='******'
+                        <input type="password"
+                            placeholder='******'
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)} />
                     </div>
