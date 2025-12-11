@@ -48,35 +48,39 @@ export default function PacienteCadastro() {
 
 
     return (
-        <body className='cadastro'>
-            
-        <div className="container-cadastro">
-            <div className="voltar">
-                <button onClick={voltarInicio}>
-                    <i><ChevronLeft size={23} /></i><p>Voltar</p>
-                </button>
-            </div>
-            <div className="box-cadastro">
-                <div className="banner-cadastro">
-                    <i><User size={55} /></i>
-                    <h1>Criar conta</h1>
-                    <p>Acesso para pacientes</p>
-                </div>
-                <form>
-                    <div className="lado1">
+        <div className='cadastro'>
 
+            <div className="container-cadastro-paciente">
+
+                <div className="box-title-paciente">
+                    <div className="voltar">
+                        <button onClick={voltarInicio}>
+                            <i><ChevronLeft size={23} /></i><p>Voltar</p>
+                        </button>
+                    </div>
+                    <div className="banner-cadastro">
+                        <i><User size={55} /></i>
+                        <h1>Criar conta</h1>
+                        <p>Acesso para pacientes</p>
+                        <p className="info">
+                            Esse setor é exclusivo para pacientes. Apenas o usuário ou um administrador da empresa poderá criar uma conta aqui.
+                        </p>
+                        <p className='info'>Todos seus dados serão guardados e protegidos com o devido processo legal.</p>
+                    </div>
+                </div>
+
+                <div className="box-inputs-paciente">
+                    <form>
                         <label><span>*</span>Nome</label>
                         <input type="name"
                             placeholder='Seu nome'
                             value={nome}
                             onChange={(e) => setNome(e.target.value)} />
-
                         <label><span>*</span>Telefone</label>
                         <input type="text"
                             placeholder='(00) 00000-0000'
                             value={telefone}
                             onChange={(e) => setTelefone(e.target.value)} />
-
                         <label><span>*</span>Sexo</label>
                         <select name="sexo"
                             id=""
@@ -86,35 +90,30 @@ export default function PacienteCadastro() {
                             <option value="F">Feminino</option>
                             <option value="Outro">Outro</option>
                         </select>
-                    </div>
-
-                    <div className="lado2">
-
                         <label><span>*</span>CPF</label>
                         <input type="text"
                             placeholder='000.000.000-00'
                             value={cpf}
                             onChange={(e) => setCPF(e.target.value)} />
-
                         <label><span>*</span>Email</label>
                         <input type="email"
                             placeholder='exemplo@email.com'
                             value={email}
                             onChange={(e) => setEmail(e.target.value)} />
-
                         <label><span>*</span>Senha</label>
                         <input type="password"
                             placeholder='******'
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)} />
-                    </div>
-                </form>
-                <button onClick={handleCadastro}>Cadastrar</button>
-                <div className="ir-logar">
-                    <p>Já possui uma conta? <Link to='/paciente/login'>Fazer login</Link></p>
+                            
+                        <button onClick={handleCadastro}>Cadastrar</button>
+                        <div className="ir-logar">
+                            <p>Já possui uma conta? <Link to='/paciente/login'>Fazer login</Link></p>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </div >
-                            </body>
+
+            </div >
+        </div>
     )
 }

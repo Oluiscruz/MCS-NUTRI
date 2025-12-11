@@ -1,8 +1,9 @@
-import { Stethoscope, ChevronLeft, Lock, Mail, HandFist } from 'lucide-react';
+import { Stethoscope, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import '../styles/medicoLogin.scss';
 import axios from 'axios';
+import { UseAuth } from '../context/context';
 
 
 export default function MedicoLogin() {
@@ -11,10 +12,11 @@ export default function MedicoLogin() {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+    const { login } = UseAuth();
 
     const voltarInicio = (e) => {
         e.preventDefault();
-        navigate('/entrar')
+        navigate('/')
     }
 
     async function handleLogin(e) {
@@ -29,6 +31,19 @@ export default function MedicoLogin() {
         try {
             const response = await axios.post('/api/login/medico', dadosMedico);
             alert(`✅ Login realizado com sucesso! ${response.data.message}`);
+
+            // Extrai o objeto de usuário retornado pela API (compatível com diferentes formatos)
+            const usuarioRetornado = response.data.usuario || response.data.user;
+
+            // Identifica o tipo de usuário para renderização condicional no front-end
+            if (usuarioRetornado && !usuarioRetornado.tipo) {
+                usuarioRetornado.tipo = 'medico';
+            }
+
+            // Atualiza o contexto e localStorage via `login` do AppContext
+            login(usuarioRetornado);
+
+            // Redireciona para dashboard do médico após login
             navigate('/medico/dashboard');
 
         } catch (error) {
@@ -41,7 +56,7 @@ export default function MedicoLogin() {
 
 
     return (
-        <body className='login'>
+        <div className='login'>
             
         <div className="container-login">
             <div className="voltar-home">
@@ -74,7 +89,7 @@ export default function MedicoLogin() {
                 </div>
             </div>
         </div>
-        </body>
+        </div>
 
     )
 }

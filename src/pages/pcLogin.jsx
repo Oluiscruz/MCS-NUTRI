@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import '../styles/login.scss';
 import axios from 'axios';
 import { useState } from 'react';
+import { UseAuth } from '../context/context';
+
 
 
 export default function PacienteLogin() {
@@ -10,6 +12,7 @@ export default function PacienteLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const {login} = UseAuth();
     const navigate = useNavigate();
 
     const voltarInicio = (e) => {
@@ -19,18 +22,28 @@ export default function PacienteLogin() {
 
     async function handleLogin(e) {
         e.preventDefault();
-
+        
         // Lógica de autenticação aqui
         const dadosPaciente = {
             email,
             password
         };
+        console.log('Enviando dadosPaciente para /api/login/paciente:', { emailPresent: !!email, hasPassword: !!password });
 
         try {
             const response = await axios.post('/api/login/paciente', dadosPaciente);
             alert(`✅ Login realizado com sucesso! ${response.data.message}`);
             navigate('/paciente/dashboard');
 
+            const usuarioRetornado = response.data.usuario || response.data.user;
+
+            // Marca tipo de usuário para uso no front-end
+            if (usuarioRetornado && !usuarioRetornado.tipo) {
+                usuarioRetornado.tipo = 'paciente';
+            }
+
+            login(usuarioRetornado);
+            
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
             const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
@@ -42,7 +55,7 @@ export default function PacienteLogin() {
 
 
     return (
-        <body className='login'>
+        <div className='login'>
 
             <div className="container-login">
                 <div className="voltar">
@@ -56,7 +69,7 @@ export default function PacienteLogin() {
                         <h1>Bem vindo(a) de volta</h1>
                         <p>Acesso para pacientes</p>
                     </div>
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <label><span>*</span>Email</label>
                         <input type="email"
                             placeholder='exemplo@email.com'
@@ -68,13 +81,13 @@ export default function PacienteLogin() {
                             placeholder='******'
                             value={password}
                             onChange={(e) => setPassword(e.target.value)} />
+                        <button type="submit">Entrar</button>
                     </form>
-                    <button onClick={handleLogin}>Entrar</button>
                     <div className="ir-cadastrar">
                         <p>Não tem uma conta? <Link to='/paciente/cadastro'>Cadastre-se</Link></p>
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     )
 }

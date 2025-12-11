@@ -11,19 +11,19 @@ export default function Connection() {
     }
 
     return (
-        <body className='connection'>
+        <div className='connection'>
 
             <div className="container-connection">
                 <div className="box-left">
                     <i><HeartPlus size={64} /></i>
                     <div className="title">
-                        <h1 onClick={ goHome } alt="Voltar para página inicial">Mais Vida</h1>
+                        <h1 onClick={goHome} alt="Voltar para página inicial">Mais Vida</h1>
                         <p>Gestão clínica simplificada para <br></br>pacientes e profissionais da saúde</p>
                     </div>
                 </div>
+                
                 <div className="box-right">
                     <h2>Como deseja acessar?</h2>
-
                     <div className="cards">
 
                         <Link to='/paciente/login'>
@@ -62,6 +62,6 @@ export default function Connection() {
 
                 </div>
             </div>
-        </body>
+        </div>
     )
 }

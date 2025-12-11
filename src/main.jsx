@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/index.scss'
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3002';
 import App from './App.jsx'
 import PacienteLogin from './pages/pcLogin.jsx'
 import PacienteCadastro from './pages/pcCadastro.jsx';
@@ -12,10 +11,14 @@ import MedicoCadastro from './pages/medCad.jsx';
 import MedicoDashboard from './pages/dashboards/med.jsx';
 import PacienteDashboard from './pages/dashboards/pc.jsx';
 import Connection from './pages/connection.jsx';
+import { AuthProvider } from './context/context.jsx';
 
+
+axios.defaults.baseURL = 'http://localhost:3001';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
@@ -28,5 +31,6 @@ createRoot(document.getElementById('root')).render(
           <Route path="/paciente/dashboard" element={<PacienteDashboard />} />
         </Routes>
       </BrowserRouter>
+    </ AuthProvider >
   </StrictMode>,
 )
