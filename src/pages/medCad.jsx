@@ -13,7 +13,7 @@ export default function MedicoCadastro() {
     const [crm, setCRM] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const [especialidade, setEspecialidade] = useState('geral');
+    const [especialidade, setEspecialidade] = useState('Geral');
     const navigate = useNavigate();
 
     const voltarInicio = (e) => {
@@ -37,7 +37,7 @@ export default function MedicoCadastro() {
         try {
             const response = await axios.post('/api/medico/cadastro', dadosMedico);
             alert(`✅ ${response.data.message}`);
-            navigate('/medico/dashboard');
+            navigate('/');
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
@@ -94,13 +94,13 @@ export default function MedicoCadastro() {
                             id=""
                             value={especialidade}
                             onChange={(e) => setEspecialidade(e.target.value)}>
-                            <option value="geral">Clínico geral</option>
-                            <option value="pediatra">Pediatra</option>
-                            <option value="radiologista">Radiologista</option>
-                            <option value="neuro">Neuro</option>
-                            <option value="cardio">Cardiologista</option>
-                            <option value="gineco">Ginecologista</option>
-                            <option value="oftalmo">Oftalmologista</option>
+                            <option value="Geral">Clínico geral</option>
+                            <option value="Pediatra">Pediatra</option>
+                            <option value="Radiologista">Radiologista</option>
+                            <option value="Neuro">Neuro</option>
+                            <option value="Cardiologista">Cardiologista</option>
+                            <option value="Ginecologista">Ginecologista</option>
+                            <option value="Oftalmologista">Oftalmologista</option>
                         </select>
                         <label><span>*</span>CRM</label>
                         <input type="text"

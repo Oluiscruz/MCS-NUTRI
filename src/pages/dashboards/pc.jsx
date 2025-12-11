@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseAuth } from '../../context/context'; // Verifique se o caminho do context está correto
 import axios from 'axios';
-import { Calendar, Clock, User, LogOut, Stethoscope } from 'lucide-react';
+import { Home, Calendar, LogOut, Stethoscope, Trash2 } from 'lucide-react';
 import '../../styles/dashboard/pcDash.scss'; // Reutilizando estilos ou crie um pcDashboard.scss
 
 export default function PacienteDashboard() {
@@ -57,6 +57,13 @@ export default function PacienteDashboard() {
         logout();
         navigate('/entrar');
     }
+    const goHome = () => {
+        navigate('/')
+    }
+
+    const reloadPage = () => {
+        window.location.reload()
+    }
 
     const handleAgendamento = async (e) => {
         e.preventDefault();
@@ -89,6 +96,23 @@ export default function PacienteDashboard() {
         }
     }
 
+    // Deleta uma consulta (por id_consulta)
+    const handleDeleteConsulta = async (id) => {
+        if (!id) return;
+        const ok = window.confirm('Tem certeza que deseja deletar esta consulta?');
+        if (!ok) return;
+
+        try {
+            const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+            await axios.delete(`${API}/api/consultas/paciente/${id}`);
+            // Remove do estado local para atualizar a UI imediatamente
+            setConsultas(prev => prev.filter(c => c.id_consulta !== id));
+        } catch (err) {
+            console.error('Erro ao deletar consulta:', err);
+            alert('Não foi possível deletar a consulta.');
+        }
+    }
+
     // Filtra médicos baseados na especialidade selecionada
     const medicosFiltrados = listaMedicos.filter(
         medico => medico.especialidade === especialidadeSelecionada
@@ -100,8 +124,10 @@ export default function PacienteDashboard() {
             <div className="container-box">
                 <div className="box-title-dashboard" >
                     <div className="sair">
+                        <button onClick={goHome}><Home size={20} />Início
+                        </button>
                         <button onClick={handleLogout} >
-                            <LogOut size={18} /> Sair do perfil
+                            <LogOut size={20} /> Sair do perfil
                         </button>
                     </div>
                     <div className="banner-dashboard">
@@ -170,8 +196,8 @@ export default function PacienteDashboard() {
                                 </div>
                             </div>
 
-                            <button type="submit">
-                                Confirmar Agendamento
+                            <button type="submit" className="agendar" onClick={reloadPage}>
+                                Confirmar
                             </button>
                         </form>
                     </div>
@@ -181,28 +207,40 @@ export default function PacienteDashboard() {
 
             {/* abaixo: Informações ou Histórico (visual básico) */}
             <div className="info-painel">
-                <h3><Stethoscope size={20} /> Suas Consultas</h3>
+                <h3><Stethoscope size={25} /> Suas Consultas</h3>
                 <p>
                     Aqui aparecerão suas consultas futuras assim que você agendar.
+                    Todas as consultas ficarão armazenadas em nosso banco de dados.
                 </p>
 
                 {consultas.length === 0 ? (
                     <div style={{ marginTop: 10 }}>
-                        <em>Nenhuma consulta encontrada.</em>
+                        <em style={{ color: '#ccc' }}>Nenhuma consulta encontrada.</em>
                     </div>
                 ) : (
-                    <div style={{ display: 'grid', gap: '10px', marginTop: '10px' }}>
+                    <div className='container-card' style={{ display: 'grid', gap: '10px', marginTop: '12px' }}>
                         {consultas.map((c) => {
-                            const dt = new Date(c.data_consulta);
-                            const formatted = isNaN(dt.getTime()) ? c.data_consulta : dt.toLocaleString();
+                            const data = new Date(c.data_consulta);
+                            const formatado = isNaN(data.getTime()) ? c.data_consulta : data.toLocaleString();
                             return (
-                                <div key={c.id_consulta} style={{ background: 'white', padding: '12px', borderRadius: 8, boxShadow: '0 2px 4px rgba(0,0,0,0.06)' }}>
-                                    <strong>{c.especialidade || 'Consulta'}</strong>
-                                    <div style={{ fontSize: 14, marginTop: 6 }}>
-                                        Dr(a). {c.medico_nome} — {formatted}
+                                <div className='card' key={c.id_consulta}>
+
+                                    <div className="especialidade">
+                                        <strong>{c.especialidade || 'Consulta'}</strong>
+                                        <p style={{ fontSize: 14, marginTop: 6, color: '#18181d' }}>
+                                            Dr(a). {c.medico_nome} — {formatado}
+                                        </p>
+                                        {c.diagnostico && <div style={{ marginTop: 6, color: '#555' }}>{c.diagnostico}</div>}
                                     </div>
-                                    {c.diagnostico && <div style={{ marginTop: 6, color: '#555' }}>{c.diagnostico}</div>}
+
+                                    <button
+                                        className="deletar-consulta"
+                                        onClick={() => handleDeleteConsulta(c.id_consulta)}
+                                        title="Deletar consulta">
+                                        <Trash2 size={14} /> Deletar
+                                    </button>
                                 </div>
+
                             )
                         })}
                     </div>
