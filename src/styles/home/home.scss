@@ -16,7 +16,7 @@ body {
 .container-home {
     .header {
         width: 100%;
-        padding: 10px 55px;
+        padding: 7px 45px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -28,7 +28,7 @@ body {
             font-family: 'Expletus Sans', sans-serif;
 
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             i {
@@ -43,12 +43,26 @@ body {
             align-items: center;
             justify-content: space-around;
 
+            a{
+                color: #000000;
+                font-weight: 600;
+                font-family: 'open sans', sans-serif;
+                &:hover {
+                        color: #206ad9;
+                    }
+            }
+
             li {
                 list-style: none;
 
                 .account {
                     background-color: #000000;
                     border-radius: 8px;
+                    transition: all 0.25s;
+
+                    &:hover{
+                        transform: scale(0.96);
+                    }
 
                     a {
                         text-decoration: none;
@@ -58,17 +72,7 @@ body {
                     }
                 }
 
-                a {
-                    text-decoration: none;
-                    color: #000000;
-                    font-weight: 600;
-                    font-family: 'open sans', sans-serif;
-                    transition: all 0.3s;
-
-                    &:hover {
-                        color: #206ad9;
-                    }
-                }
+            
             }
         }
 

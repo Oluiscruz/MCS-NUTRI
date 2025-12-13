@@ -30,7 +30,7 @@ export default function MedicoLogin() {
 
         try {
             const response = await axios.post('/api/login/medico', dadosMedico);
-            alert(`✅ Login realizado com sucesso! ${response.data.message}`);
+            alert(`${response.data.message}`);
 
             // Extrai o objeto de usuário retornado pela API (compatível com diferentes formatos)
             const usuarioRetornado = response.data.usuario || response.data.user;

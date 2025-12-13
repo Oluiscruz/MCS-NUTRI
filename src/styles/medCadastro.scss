@@ -119,6 +119,12 @@
                 font-size: 15px;
                 width: 100%;
                 margin-bottom: 12px;
+
+                &:focus {
+                    outline: none;
+                    border-color: #20d945;
+                    box-shadow: 0 0 0 4px rgba(44, 229, 84, 0.06);
+                }
             }
 
             select {

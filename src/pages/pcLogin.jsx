@@ -32,8 +32,8 @@ export default function PacienteLogin() {
 
         try {
             const response = await axios.post('/api/login/paciente', dadosPaciente);
-            alert(`✅ Login realizado com sucesso! ${response.data.message}`);
-            navigate('/paciente/dashboard');
+            alert(`${response.data.message}`);
+            navigate('/perfil/paciente');
 
             const usuarioRetornado = response.data.usuario || response.data.user;
 

@@ -108,23 +108,29 @@
 
                 input {
                     padding: 8px 15px;
-                border-radius: 6px;
-                background-color: transparent;
-                border: 1px solid #ccc;
-                font-family: 'Open sans', sans-serif;
-                color: #18181d;
-                font-size: 15px;
-                width: 100%;
-                margin-bottom: 12px;
+                    border-radius: 6px;
+                    background-color: transparent;
+                    border: 1px solid #ccc;
+                    font-family: 'Open sans', sans-serif;
+                    color: #18181d;
+                    font-size: 15px;
+                    width: 100%;
+                    margin-bottom: 12px;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #206ad9;
+                        box-shadow: 0 0 0 4px rgba(44, 140, 229, 0.06);
+                    }
                 }
 
                 select {
-                padding: 8px 15px;
-                margin-bottom: 12px;
-                border-radius: 6px;
+                    padding: 8px 15px;
+                    margin-bottom: 12px;
+                    border-radius: 6px;
 
 
-            }
+                }
             }
 
             button {

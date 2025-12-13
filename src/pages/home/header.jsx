@@ -16,12 +16,14 @@ export default function Header() {
         <header className="header">
 
             <div className="logo">
-                <h1> <i><HeartPlus size={40} /></i> Mais Vida</h1>
+                <h1> <i><HeartPlus size={35} /></i> Mais Vida</h1>
             </div>
 
             {usuario ? (
                 <nav className="links-header">
-                    <span>Olá, {usuario.nome}</span>
+                    <span>
+                        <Link to='/perfil/paciente'>Perfil</Link>
+                    </span>
 
                     <li><a href="https://wa.me/5581999155751?text=🧑🏽‍💻 Olá Luis, vi seu projeto sobre a clínica médica e gostaria de algumas informações">Contato</a></li>
                     <li><a href="#" onClick={soon}>Sobre</a></li>

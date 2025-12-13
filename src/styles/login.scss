@@ -80,18 +80,24 @@
                     font-family: 'Open sans', sans-serif;
                     color: #18181d;
                     font-size: 18px;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #206ad9;
+                        box-shadow: 0 0 0 4px rgba(44, 140, 229, 0.06);
+                    }
                 }
             }
 
             button {
                 background-color: #206ad9;
-                width: 90%;
                 font-size: 18px;
                 cursor: pointer;
                 transition: all 0.2s;
+                color: #fff;
 
                 &:hover {
-                    background-color: #164997;
+                    background-color: #243142;
                     transform: scale(1.04);
                 }
             }
