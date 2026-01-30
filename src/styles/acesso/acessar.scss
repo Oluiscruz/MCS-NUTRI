@@ -1,0 +1,260 @@
+:root {
+    --nCor1: #120907;
+    --nCor2: #202134;
+    --nCor3: #565f85;
+    --nCor4: #96a0e5;
+    --nCor5: #cdcaff;
+    --red: #ff4d4d;
+}
+
+.connection {
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 500px) {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .container-connection {
+        display: flex;
+        justify-content: center;
+        box-shadow: 3px 5px 25px #18181d45;
+        border-radius: 25px;
+
+        @media (max-width: 500px) {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .box-left {
+            width: 680px;
+            padding: 65px;
+            border-bottom-left-radius: 25px;
+            border-top-left-radius: 25px;
+            background: var(--nCor2);
+
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            @media (max-width: 500px) {
+                width: 100%;
+                border-radius: 0;
+                padding: 20px;
+
+            }
+
+            .sair {
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                width: fit-content;
+                padding: 2px;
+                margin-bottom: 20px;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.25s ease-in-out;
+
+                &:hover {
+                    background-color: var(--color2);
+
+                }
+            }
+
+            i {
+                margin-bottom: 18px;
+                color: #fff;
+            }
+
+            .title {
+                text-shadow: 2px 3px 8px #18181d;
+
+                h1 {
+                    font-family: 'Expletus Sans', sans-serif;
+                    font-size: 3.5rem;
+                    margin-bottom: 18px;
+                    color: #fff;
+                    transition: all 0.25s;
+
+                    @media (max-width: 500px) {
+                        font-size: 2.5rem;
+                    }
+                }
+
+                p {
+                    margin: 8px;
+                    color: var(--title2);
+                    font-size: 20px;
+
+                    @media (max-width: 500px) {
+                        font-size: 1.2rem;
+                        margin-bottom: 25px;
+                    }
+                }
+            }
+        }
+
+        .box-right {
+            width: 680px;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            padding: 65px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            @media (max-width: 500px) {
+                border-radius: 0;
+            }
+
+            h2 {
+                margin: 18px;
+                font-size: 2rem;
+                color: #121212da;
+
+                @media (max-width: 500px) {
+                    font-size: 1.6rem;
+                    margin: 6px;
+                }
+            }
+
+            .cards {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 7px;
+                gap: 20px;
+                margin: 25px;
+
+                @media (max-width: 500px) {
+                    margin: 15px;
+                    padding: 0;
+                }
+
+                .paciente {
+                    gap: 20px;
+                    border: 2px solid #cccccca2;
+                    border-radius: 18px;
+                    padding: 20px 40px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    @media (max-width: 500px) {
+                        padding: 20px;
+                    }
+
+                    &:hover {
+                        border: 2px solid #199fd9;
+                        background-color: #20a1d91f;
+                    }
+
+                    .icon-right {
+                        background-color: #46c4dd45;
+                        padding: 14px 15px;
+                        border-radius: 100%;
+
+                        i {
+                            color: #199fd9;
+                        }
+                    }
+
+                    .infos {
+                        padding: 8px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+
+                        .quem-sou {
+                            h3 {
+                                color: #121212cd;
+                            }
+
+                            p {
+                                color: #12121286;
+                                font-weight: 600;
+                            }
+                        }
+
+                        .ir {
+                            i {
+                                color: #1212126f;
+                            }
+                        }
+                    }
+                }
+
+                .medico {
+                    gap: 20px;
+                    border: 2px solid #cccccca2;
+                    border-radius: 18px;
+                    padding: 20px 40px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    @media (max-width: 500px) {
+                        padding: 20px;
+                    }
+
+                    &:hover {
+                        border: 2px solid #20d973;
+                        background-color: #20d94b1e;
+                    }
+
+                    .icon-right {
+                        background-color: #20d94528;
+                        padding: 14px 15px;
+                        border-radius: 100%;
+
+                        i {
+                            color: #20d945;
+                        }
+                    }
+
+                    .infos {
+                        padding: 8px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+
+                        .quem-sou {
+
+
+                            h3 {
+                                color: #121212cd;
+                            }
+
+                            p {
+                                color: #12121286;
+                                font-weight: 600;
+                            }
+                        }
+
+                        .ir {
+                            i {
+                                color: #1212126f;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

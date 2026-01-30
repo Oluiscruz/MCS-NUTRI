@@ -16,19 +16,22 @@ body {
 .container-home {
     .header {
         width: 100%;
-        padding: 7px 45px;
+        padding: 15px 55px;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
-
-        background-color: #fff;
-        color: #000000;
+        background-color: var(--title1);
+        color: var(--title2);
 
         .logo {
-            font-family: 'Expletus Sans', sans-serif;
+            font-family: 'Roboto Serif', sans-serif;
 
             h1 {
-                font-size: 2rem;
+                font-size: 2.3rem;
+
+                span{
+                    color: var(--color4);
+                }
             }
 
             i {
@@ -44,24 +47,39 @@ body {
             justify-content: space-around;
 
             a{
-                color: #000000;
-                font-weight: 600;
+            text-transform: uppercase;
+                color: #fff;
+                font-size: 0.8rem;
+                font-weight: 500;
                 font-family: 'open sans', sans-serif;
+                border-bottom: 3px solid transparent;
+                border-radius: 12px;
+                padding: 7px 10px;
+                transition: all 0.3s ease;
                 &:hover {
-                        color: #206ad9;
+                    transform: scale(0.98);
+                        color: var(--title2);
+                        border-bottom: 3px solid var(--title2);
                     }
             }
 
             li {
                 list-style: none;
 
+                p{
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    font-family: 'open sans', sans-serif;
+                    color: #ccc;
+                }
+
                 .account {
-                    background-color: #000000;
-                    border-radius: 8px;
+                    border: 1.5px solid var(--color1);
+                    border-radius: 7px;
                     transition: all 0.25s;
 
                     &:hover{
-                        transform: scale(0.96);
+                        background-color: var(--color1);
                     }
 
                     a {
@@ -71,144 +89,10 @@ body {
                         font-family: 'open sans', sans-serif;
                     }
                 }
-
-            
+                
             }
         }
 
     }
 
-    .section-home {
-        padding: 5rem 7rem;
-        min-height: 70vh;
-        background-color: #e2e2e2;
-
-        .content-section {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 20px;
-
-            h2 {
-                font-size: 3rem;
-                max-width: 800px;
-                font-weight: 700;
-                line-height: 3.2rem;
-                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            p {
-                font-size: 1.2rem;
-                color: #535a5c;
-                max-width: 800px;
-                font-family: 'Open Sans', sans-serif;
-            }
-            button{
-                background-color: #000000;
-                color: #fff;
-                width: 150px;
-                padding: 10px 15px;
-                border-radius: 25px;
-                font-family: 'open sans', sans-serif;
-                font-weight: 700;
-                cursor: pointer;
-
-                &:hover {
-                    transform: scale(0.96);
-                    background-color: #206ad9;
-                }
-            }
-        }
-    }
-
-    .footer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-        gap: 20px;
-        padding: 25px 25px;
-        background-color: #18181d;
-        color: #ccc;
-        font-family: 'Open Sans', sans-serif;
-
-        .info-footer {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            gap: 10px;
-            margin: 12px;
-            font-size: 13px;
-
-            span {
-                a {
-                    color: #397bdf;
-                    font-weight: 600;
-                    text-decoration: none;
-                    transition: all 0.3s;
-
-                    &:hover {
-                        color: #206ad9;
-                    }
-                }
-            }
-        }
-
-        .position-footer {
-            display: flex;
-            justify-content: space-between;
-            width: 80%;
-
-
-            .linguage-footer {
-                display: flex;
-                flex-direction: column;
-                text-align: center;
-                gap: 8px;
-
-                p {
-                    font-weight: 600;
-                }
-
-                ul {
-                    display: flex;
-                    gap: 10px;
-
-
-                    li {
-                        list-style: none;
-                        color: #fff;
-                    }
-                }
-            }
-
-            .contato-footer {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-
-                .icons-footer {
-                    display: flex;
-                    gap: 20px;
-
-                    li {
-                        list-style: none;
-
-                        a {
-                            color: #fff;
-                            transition: all 0.3s;
-
-                            &:hover {
-                                color: #206ad9;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
 }

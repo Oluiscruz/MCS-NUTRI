@@ -1,0 +1,123 @@
+.login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container-login {
+        .voltar {
+            display: flex;
+
+            button {
+                display: flex;
+                justify-content: center;
+                border-radius: 25px;
+                gap: 5px;
+                color: #18181d80;
+                transition: all 0.3s;
+
+                p {
+                    font-size: 16px;
+                }
+
+                &:hover {
+                    color: #206ad9;
+                    transform: scale(1.105);
+                }
+            }
+        }
+
+
+        .box-login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 12px;
+
+            .banner-login {
+                color: #18181d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+
+                i {
+                    color: #206ad9;
+                }
+
+                h1 {
+                    font-family: 'Sofia Sans', sans-serif;
+                    font-size: 2.2rem;
+                }
+
+                p {
+                    font-size: 18px;
+                }
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: 90%;
+                gap: 12px;
+                margin: 25px;
+
+                label {
+                    color: #18181d;
+                    font-weight: 600;
+                    font-family: 'Open Sans', sans-serif;
+
+                    span {
+                        color: brown;
+                    }
+                }
+
+                input {
+                    padding: 12px 15px;
+                    border-radius: 10px;
+                    background-color: transparent;
+                    border: 1px solid #ccc;
+                    font-family: 'Open sans', sans-serif;
+                    color: #18181d;
+                    font-size: 18px;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #206ad9;
+                        box-shadow: 0 0 0 4px rgba(44, 140, 229, 0.06);
+                    }
+                }
+            }
+
+            button {
+                background-color: #206ad9;
+                font-size: 18px;
+                cursor: pointer;
+                transition: all 0.2s;
+                color: #fff;
+
+                &:hover {
+                    background-color: #243142;
+                    transform: scale(1.04);
+                }
+            }
+
+            .ir-cadastrar {
+                margin-top: 22px;
+
+                p {
+                    color: #18181d;
+
+                    a {
+                        color: #206ad9;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            color: #164997;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

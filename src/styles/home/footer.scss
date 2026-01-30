@@ -1,0 +1,65 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 25px 25px;
+    background-color: #18181d;
+    color: #ccc;
+    font-family: 'Open Sans', sans-serif;
+
+    .info-footer {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        margin: 12px;
+        font-size: 13px;
+
+        p {
+            color: var(--title2);
+        }
+
+        span {
+            a {
+                color: #397bdf;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.3s;
+
+                &:hover {
+                    color: #206ad9;
+                }
+            }
+        }
+    }
+
+
+    .contato-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
+        .icons-footer {
+            display: flex;
+            gap: 20px;
+
+            li {
+                list-style: none;
+
+                a {
+                    color: #fff;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        color: #206ad9;
+                    }
+                }
+            }
+        }
+    }
+}

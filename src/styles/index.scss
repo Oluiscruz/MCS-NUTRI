@@ -2,11 +2,15 @@
 
 :root {
   font-family: 'Open Sans', sans-serif;
-
+  --color1: #655ab1;
+  --color2: #2c2958;
+  --color3: #ffdef4;
+  --color4: #b196fa;
+  --title1: #000000;
+  --title2: #fff;
 
   color-scheme: light dark;
-  background-color: #dfdfdf;
-
+  background-color: #ffffe1;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,7 +19,7 @@
 
 a {
   font-weight: 700;
-  color: #206ad9;
+  color: var(--color3);
   text-decoration: inherit;
 }
 

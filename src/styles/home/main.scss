@@ -1,52 +1,113 @@
-@import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Delius+Unicase:wght@400;700&family=Fjalla+One&family=Karla:ital,wght@0,200..800;1,200..800&family=Lexend+Deca:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&family=Voces&display=swap');
 
-.banner-home{
+.banner-home {
     display: flex;
-    justify-content: center;
     align-items: center;
     margin: auto 0;
-    background-color: #096eb4;
-    padding: 4rem 2rem;
+    padding: 4rem 6rem;
+    gap: 85px;
     text-align: center;
-    height: 70vh;
+    height: 90vh;
+    background: linear-gradient(to bottom, var(--color1), #ccc);
 
-    .content-banner{
+    .content-banner {
         color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
 
         h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-family: 'Expletus Sans', serif;
+
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-family: 'Bungee Hairline', serif;
+            max-width: 700px;
+
+        }
+
+        h2 {
+            font-size: 3.25rem;
+            font-weight: 200;
+            font-family: 'Lexend Deca', serif;
+            max-width: 700px;
+        }
+
+        h3 {
+            font-size: 3.25rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            font-family: 'Lexend Deca', sans-serif;
+            max-width: 700px;
         }
 
         p {
-            font-size: 1.2rem;
+            text-shadow: 2px 3px 3.5px #18181dba;
+            font-size: 1.4rem;
             margin-bottom: 2rem;
-            color: #e0e0e0c8;
+            color: #eefaff;
             font-family: 'open sans', sans-serif;
+            text-align: center;
+            max-width: 400px;
         }
 
         .get-started {
-            background-color: #ffffff;
-            color: #096eb4;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 5px;
+            background: linear-gradient(to right, var(--color2), var(--color4));
+            color: #fff;
             font-size: 1rem;
-            font-weight: 600;
+            padding: 12px 30px;
+            border: 1px solid var(--title2);
+            border-radius: 25px;
             cursor: pointer;
-            text-decoration: none;
-
-            a{
-                text-decoration: none;
-                color: #096eb4;
-                font-family: 'open sans', sans-serif;
-            }
+            transition: all 0.25s ease;
 
             &:hover {
-                transform: scale(0.96);
-                background-color: #e0e0e0;
+                background: #fff !important;
+                color: #333;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             }
         }
     }
+
+    .image-banner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin-top: 30px;
+
+        img {
+            width: 400px;
+            height: 580px;
+            filter: opacity(60%);
+            border: 1px solid #ccc;
+
+            border-radius: 60px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(-45deg, #e9ee52, #e73c7e, var(--color1), var(--color2));
+            background-size: 400% 400%;
+            animation: pulse 4s ease-in-out infinite;
+
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
 }
