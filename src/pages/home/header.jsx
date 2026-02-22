@@ -18,7 +18,7 @@ export default function Header() {
 
     const navigate = useNavigate();
     const Entrar = () => { navigate('/entrar'); }
-    const Agendamento = () => { navigate('/paciente/perfil'); }
+    const Agendamento = () => { navigate('/paciente/agendar-consulta'); }
     const Perfil = () => { navigate('/nutricionista/perfil'); }
 
     return (

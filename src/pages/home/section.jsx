@@ -28,8 +28,6 @@ export default function Section() {
         setShowModal(false);
     }
 
-
-
     return (
         <section className="container-section-home">
             <div className="title-section">
@@ -73,27 +71,26 @@ export default function Section() {
             {showModal && (
                 <div className="modal-overlay" onClick={fecharModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button" onClick={fecharModal}>×</button>
+                        <button className="close-button" onClick={fecharModal}>Fechar</button>
                         <div className="resultado">
                             <h2>Seu IMC é: <span>{imc}</span></h2>
-                            <p className={`imc-category ${
-                                imc < 18.5 ? 'abaixo-peso' :
-                                imc >= 18.5 && imc <= 24.9 ? 'peso-ideal' :
-                                imc >= 25 && imc <= 29.9 ? 'sobrepeso' :
-                                imc >= 30 && imc <= 34.9 ? 'obesidade-1' :
-                                imc >= 35 && imc <= 39.9 ? 'obesidade-2' : 'obesidade-3'
-                            }`}>
+                            <p className={`imc-category ${imc < 18.5 ? 'abaixo-peso' :
+                                    imc >= 18.5 && imc <= 24.9 ? 'peso-ideal' :
+                                        imc >= 25 && imc <= 29.9 ? 'sobrepeso' :
+                                            imc >= 30 && imc <= 34.9 ? 'obesidade-1' :
+                                                imc >= 35 && imc <= 39.9 ? 'obesidade-2' : 'obesidade-3'
+                                }`}>
                                 {imc < 18.5 ?
                                     'Você está abaixo do peso ideal' :
                                     imc >= 18.5 && imc <= 24.9 ?
-                                    'Parabéns! Você está no peso ideal' :
-                                    imc >= 25 && imc <= 29.9 ?
-                                    'Você está acima do seu peso ideal. Marque uma consulta!' :
-                                    imc >= 30 && imc <= 34.9 ?
-                                    'Você está com obesidade grau I' :
-                                    imc >= 35 && imc <= 39.9 ?
-                                    'Você está com obesidade grau II' :
-                                    'Você está com obesidade grau III'
+                                        'Parabéns! Você está no peso ideal' :
+                                        imc >= 25 && imc <= 29.9 ?
+                                            'Você está acima do seu peso ideal. Marque uma consulta!' :
+                                            imc >= 30 && imc <= 34.9 ?
+                                                'Você está com obesidade grau I' :
+                                                imc >= 35 && imc <= 39.9 ?
+                                                    'Você está com obesidade grau II' :
+                                                    'Você está com obesidade grau III'
                                 }
                             </p>
                             <div className="agendamento">

@@ -9,7 +9,9 @@ export default function Nutricionista_cadastro() {
 
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
-    const [crn, setCRN] = useState('');
+    const [crn_regiao, set_crn_regiao] = useState(1);
+    const [crn_numero, set_crn_numero] = useState('');
+    const [crn_documento, set_crn_documento] = useState(null);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const navigate = useNavigate();
@@ -22,16 +24,20 @@ export default function Nutricionista_cadastro() {
     async function handleCadastro(e) {
         e.preventDefault();
 
-        const dadosNutri = {
-            nome,
-            telefone,
-            crn,
-            email,
-            senha
-        };
+        // Monta FormData para enviar o arquivo junto com os campos
+        const formData = new FormData();
+        formData.append('nome', nome);
+        formData.append('telefone', telefone);
+        formData.append('crn_numero', crn_numero);
+        formData.append('crn_regiao', crn_regiao);
+        formData.append('email', email);
+        formData.append('senha', senha);
+        if (crn_documento) formData.append('crn_documento', crn_documento);
 
         try {
-            const response = await axios.post('/api/nutricionista/cadastro', dadosNutri);
+            const response = await axios.post('/api/nutricionista/cadastro', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
             console.log('✅ Sucesso no cadastro:', response.data.message);
             navigate('/');
 
@@ -58,7 +64,6 @@ export default function Nutricionista_cadastro() {
                         <h1>Criar conta</h1>
                         <p>Acesso para nutricionistas.</p>
                         <p className='info'>Esse cadastro é feito apenas para profissionais que portam CRN e podem atender aos pacientes.</p>
-                        <p className='info'>Profissionais responsáveis pela utilizaçção do sistema podem fazer monitoramento e marcar consultas e exames para os médicos.</p>
                     </div>
                 </div>
 
@@ -74,12 +79,36 @@ export default function Nutricionista_cadastro() {
                             placeholder='(00) 00000-0000'
                             value={telefone}
                             onChange={(e) => setTelefone(e.target.value)} />
-                            
+
                         <label><span>*</span>CRN</label>
-                        <input type="text"
-                            placeholder='CRN-1: 23456'
-                            value={crn}
-                            onChange={(e) => setCRN(e.target.value)} />
+                        <div className="crn">
+
+                            <select name="crn-regiao" id="crn-regiao"
+                                value={crn_regiao}
+                                onChange={(e) => set_crn_regiao(Number(e.target.value))}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                            </select>
+                            <input type='number'
+                                placeholder='ex: 12345'
+                                value={crn_numero}
+                                onChange={(e) => set_crn_numero(e.target.value)}
+                            />
+                        </div>
+                        <div className="crn-documento">
+                            <input name="crn_documento" type="file" placeholder='insira seu documento com CRN'
+                                onChange={(e) => set_crn_documento(e.target.files[0])}
+                                accept=".pdf,.jpg,.jpeg,.png" />
+                        </div>
 
                         <label><span>*</span>Email</label>
                         <input type="email"

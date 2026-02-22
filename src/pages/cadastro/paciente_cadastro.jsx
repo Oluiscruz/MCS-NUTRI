@@ -3,7 +3,6 @@ import axios from 'axios';
 import { User, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import '../../styles/cadastro/paciente.scss';
-import { UseAuth } from '../../context/context';
 
 
 export default function Paciente_cadastro() {
@@ -14,8 +13,6 @@ export default function Paciente_cadastro() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [nascimento, setNascimento] = useState('');
-
-    const [login] = UseAuth();
 
 
     const navigate = useNavigate();
@@ -67,10 +64,8 @@ export default function Paciente_cadastro() {
                         <i><User size={55} /></i>
                         <h1>Criar conta</h1>
                         <p>Acesso para pacientes</p>
-                        <p className="info">
-                            Esse setor é exclusivo para pacientes. Apenas o usuário ou um administrador da empresa poderá criar uma conta aqui.
-                        </p>
-                        <p className='info'>Todos seus dados serão guardados e protegidos com o devido processo legal.</p>
+                        
+                        <p className='info'>Ao clicar em CADASTRAR, todos seus dados serão guardados e protegidos com o devido processo legal.</p>
                     </div>
                 </div>
 
