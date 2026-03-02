@@ -1,10 +1,9 @@
 import { Calendar } from "react-calendar";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar as CalendarIcon, Settings, AlertCircle } from 'lucide-react';
 import '../../styles/perfil-nutri/agenda.scss';
 import 'react-calendar/dist/Calendar.css';
 import { UseAuth } from "../../context/context";
-
 import { useState } from "react";
 import axios from "axios";
 
@@ -14,6 +13,8 @@ export default function AgendaCustom() {
     const [horaInicio, setHoraInicio] = useState('');
     const [horaFim, setHoraFim] = useState('');
     const [tempoAtendimento, setTempoAtendimento] = useState('');
+    const [mensagem, setMensagem] = useState('');
+    const [mensagemTempo, setMensagemTempo] = useState('');
 
     const { usuario } = UseAuth();
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function AgendaCustom() {
 
     const handleTempoAtendimento = async () => {
         if (!tempoAtendimento) {
-            alert('Selecione um tempo de atendimento');
+            setMensagem('Selecione um tempo de atendimento');
             return;
         }
 
@@ -34,28 +35,25 @@ export default function AgendaCustom() {
                 nutricionista_id: usuario.id,
                 tempo_atendimento: tempoAtendimento
             });
-            console.log(response.data.message);
-            alert('Tempo de atendimento salvo!');
+            setMensagem('✅ Tempo de atendimento salvo com sucesso!');
         } catch (error) {
-            console.error('Erro ao salvar tempo de atendimento:', error);
-            const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
-            alert(`Erro: ${msgErro}`);
+            console.error('Erro ao salvar:', error);
+            setMensagem('Erro ao salvar tempo de atendimento.');
         }
     }
 
     async function SalvarData(e) {
         e.preventDefault();
-
         if (!data || !horaInicio || !horaFim) {
-            alert('Selecione uma data e os horários');
+            setMensagemTempo('Preencha todos os campos do horário');
+            setTimeout(() => {
+                setShowOverlay(false);
+                setMensagemTempo('');
+            }, 2000);
             return;
         }
 
-        const meses = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
-
+        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
         const dadosData = {
             nutricionista_id: usuario.id,
             mes: meses[data.getMonth()],
@@ -67,86 +65,118 @@ export default function AgendaCustom() {
         }
 
         try {
-            const response = await axios.post('/api/nutricionista/agenda/salvar-data', dadosData);
-            console.log(response.data.message);
-            alert('Data salva com sucesso!');
-            setShowOverlay(false);
+            await axios.post('/api/nutricionista/agenda/salvar-data', dadosData);
+
+            setMensagemTempo('Horário de atendimento configurado!');
             setHoraInicio('');
             setHoraFim('');
+            setTimeout(() => {
+                setShowOverlay(false);
+                setMensagemTempo('');
+            }, 2000);
         } catch (error) {
-            console.error('Erro ao salvar data:', error);
-            const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
-            alert(`${msgErro}`);
+            const msgErro = error.response ? error.response.data.message : 'Erro ao salvar.';
+            setMensagemTempo(msgErro);
+            setTimeout(() => {
+                setShowOverlay(false);
+                setMensagemTempo('');
+            }, 2000);
         }
-    }
-
-    const Voltar = () => {
-        navigate('/nutricionista/perfil');
     }
 
     return (
         <div className="container-agenda">
-            <div className="header-agenda">
-                <div className="voltar">
-                    <button onClick={Voltar}><ArrowLeft />Voltar</button>
+            <header className="main-header">
+                <button className="btn-back" onClick={() => navigate('/nutricionista/perfil')}>
+                    <ArrowLeft size={20} /> Voltar ao Perfil
+                </button>
+                <div className="brand-title">
+                    <h1>Gestão de Agenda</h1>
+                    <p>Organize sua disponibilidade para novos pacientes</p>
                 </div>
-                <div className="title-agenda">
-                    <h1>Essa é sua agenda</h1>
-                    <p>Marque abaixo seus dias e horários de atendimento</p>
-                    <span>As datas passadas não podem ser marcadas.</span><br />
-                    <span>Os pacientes irão agendar a data que você marcar aqui.</span>
-                </div>
+            </header>
 
-                <div className="tempo-de-atendimento">
-                    <span>*Importante</span>
-                    <p>defina o seu tempo de atendimento</p>
-                    <p className="ex">Ex 00:30 = 30 min</p>
-                    <div className="box-tempo">
-                    <input 
-                        type="time" 
-                        value={tempoAtendimento}
-                        onChange={(e) => setTempoAtendimento(e.target.value)}
-                        />
-                    <button onClick={handleTempoAtendimento}>Salvar</button>
+            <main className="content-grid">
+                {/* Coluna de Configurações */}
+                <aside className="settings-card">
+                    <div className="card-header">
+                        <Settings size={20} />
+                        <h3>Configuração Padrão</h3>
+                    </div>
+                    <div className="setting-item">
+                        <label>Duração da Consulta</label>
+                        <p className="helper-text">Quanto tempo dura cada atendimento?</p>
+                        <div className="input-group">
+                            <input 
+                                type="time" 
+                                value={tempoAtendimento}
+                                onChange={(e) => setTempoAtendimento(e.target.value)}
+                            />
+                            <button onClick={handleTempoAtendimento} className="btn-save-sm">Definir</button>
                         </div>
-                </div>
-            </div>
 
+                        {mensagem && (
+                            mensagem.includes('sucesso') 
+                                ? <p className="confirm-tempo-atendimento">{mensagem}</p>
+                                : <p className="error-tempo-atendimento">{mensagem}</p>
+                        )}
+                    </div>
+                    <div className="info-box">
+                        <AlertCircle size={18} />
+                        <p>Datas passadas ficam bloqueadas automaticamente para agendamento.</p>
+                    </div>
+                </aside>
 
-
-            <div className="calendar">
-                <div className="data">
-                    <Calendar 
-                        onChange={handleData} 
-                        value={data} 
-                        minDate={new Date()}
-                    />
-                </div>
-            </div>
+                {/* Seção do Calendário */}
+                <section className="calendar-card">
+                    <div className="calendar-wrapper">
+                        <Calendar 
+                            onChange={handleData} 
+                            value={data} 
+                            minDate={new Date()}
+                            locale="pt-BR"
+                        />
+                    </div>
+                </section>
+                
+                
+            </main>
 
             {showOverlay && (
                 <div className="overlay">
-                    <div className="overlay-content">
-                        <h3>Horário para {data?.toLocaleDateString('pt-BR')}</h3>
-                        <div className="horario-inputs">
-                            <label>Horário de início:</label>
-                            <input 
-                                type="time" 
-                                value={horaInicio}
-                                onChange={(e) => setHoraInicio(e.target.value)}
-                            />
-                            <label>Horário de fim:</label>
-                            <input 
-                                type="time" 
-                                value={horaFim}
-                                onChange={(e) => setHoraFim(e.target.value)}
-                            />
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <CalendarIcon size={24} />
+                            <h3>Configurar: {data?.toLocaleDateString('pt-BR')}</h3>
                         </div>
-                        <div className="overlay-buttons">
-                            <button onClick={() => setShowOverlay(false)}>Cancelar</button>
-                            <button onClick={SalvarData}>Salvar</button>
+                        
+                        <div className="time-picker-section">
+                            <div className="time-field">
+                                <label>Início do Expediente</label>
+                                <div className="input-with-icon">
+                                    <Clock size={16} />
+                                    <input type="time" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                                </div>
+                            </div>
+                            <div className="time-field">
+                                <label>Término do Expediente</label>
+                                <div className="input-with-icon">
+                                    <Clock size={16} />
+                                    <input type="time" value={horaFim} onChange={(e) => setHoraFim(e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button className="btn-cancel" onClick={() => setShowOverlay(false)}>Cancelar</button>
+                            <button className="btn-confirm" onClick={SalvarData}>Salvar Disponibilidade</button>
                         </div>
                     </div>
+                    {mensagemTempo && (
+                        mensagemTempo.includes('sucesso') || mensagemTempo.includes('configurado')
+                            ? <div className="confirm-msg">{mensagemTempo}</div>
+                            : <div className="error-msg">{mensagemTempo}</div>
+                    )}
                 </div>
             )}
         </div>

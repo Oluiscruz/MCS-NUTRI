@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UseAuth } from "../../context/context";
 import { Calendar } from 'react-calendar';
-import { ArrowLeft, Calendar as CalendarIcon, Clock, LogOut, UserCircle, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Calendar as CalendarIcon, Clock, LogOut, UserCircle, CheckCircle, ClipboardClock } from 'lucide-react';
 import 'react-calendar/dist/Calendar.css'; // Garantir que o CSS base do calendário seja importado
 import '../../styles/perfil-paciente/agendarConsulta.scss';
 
@@ -129,7 +129,7 @@ export default function AgendarConsulta() {
             const listaFiltrada = listaCompleta.filter(horario => !ocupadosDoDia.includes(horario));
 
             setHorariosGerados(listaFiltrada);
-            
+
         } else {
             setHorariosGerados([]);
         }
@@ -143,13 +143,13 @@ export default function AgendarConsulta() {
                 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
                 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
             ];
-            
+
             const taDisponivel = diasDisponiveis.some(d =>
                 d.dia === date.getDate() &&
                 d.mes === meses[date.getMonth()] &&
                 d.ano === date.getFullYear()
             );
-            return !taDisponivel; 
+            return !taDisponivel;
         }
         return false;
     };
@@ -178,6 +178,10 @@ export default function AgendarConsulta() {
         navigate('/');
     }
 
+    const ficha = () => {
+        navigate('/paciente/ficha');
+    }
+
     return (
         <div className="container-agendamento">
             {/* Topbar de Navegação */}
@@ -195,10 +199,11 @@ export default function AgendarConsulta() {
                 <div className="title-header">
                     <h1>Olá, {usuario?.nome?.split(' ')[0]} 👋</h1>
                     <p>Vamos agendar sua próxima consulta? Escolha o profissional e o melhor horário para você.</p>
+                    <em>O preenchimento da ficha médica é opcional.</em>
                 </div>
 
                 <div className="select-nutricionista">
-                    <label htmlFor="nutri-select">Com qual profissional você deseja se consultar?</label>
+                    <label htmlFor="nutri-select">Selecione um profissional e preencha sua ficha</label>
                     <div className="select-wrapper">
                         <UserCircle className="select-icon" size={20} />
                         <select
@@ -217,9 +222,12 @@ export default function AgendarConsulta() {
                                 </option>
                             ))}
                         </select>
+                        <div className="ficha-paciente">
+                            <button onClick={ficha}><ClipboardClock size={20} /> Preencher ficha</button>
+                        </div>
                     </div>
                 </div>
-                
+
                 {erro && <div className="mensagem-erro">{erro}</div>}
             </header>
 
@@ -230,7 +238,7 @@ export default function AgendarConsulta() {
                         <CalendarIcon size={20} className="icon-primary" />
                         <h3>Escolha a Data</h3>
                     </div>
-                    
+
                     {!nutriSelecionado ? (
                         <div className="empty-state">
                             <p>👆 Selecione um profissional acima para visualizar o calendário.</p>

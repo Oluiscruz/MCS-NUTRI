@@ -1,3 +1,31 @@
+:root {
+    /* Paleta de Cores Moderna */
+    --primary: #4F46E5;
+    /* Índigo principal */
+    --primary-hover: #4338CA;
+    --primary-light: #EEF2FF;
+    --success: #10B981;
+    /* Verde sucesso */
+    --success-hover: #059669;
+    --success-light: #D1FAE5;
+    --danger: #EF4444;
+    /* Vermelho erro */
+    --danger-light: #FEE2E2;
+
+    --text-main: #111827;
+    /* Quase preto para títulos */
+    --text-muted: #6B7280;
+    /* Cinza para textos secundários */
+
+    --bg-page: #F3F4F6;
+    /* Fundo da página */
+    --bg-card: #FFFFFF;
+    /* Fundo dos cards */
+    --border-color: #E5E7EB;
+    /* Bordas sutis */
+}
+
+
 .container-perfil-nutri {
     display: flex;
     height: 100vh;
@@ -66,7 +94,7 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        background: var(--nCor4);
+                        background: var(--primary);
                         padding: 12px;
                         width: 50px;
                         height: 50px;
@@ -88,7 +116,7 @@
                 }
 
                 &:hover {
-                    transform: scale(1.1);
+                    transform: scale(1.05);
                 }
             }
         }

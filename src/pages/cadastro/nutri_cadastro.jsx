@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
 import '../../styles/cadastro/nutri.scss'
+import { UseAuth } from '../../context/context';
 
 
 export default function Nutricionista_cadastro() {
@@ -15,6 +16,7 @@ export default function Nutricionista_cadastro() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const navigate = useNavigate();
+    const { login } = UseAuth();
 
     const voltarInicio = (e) => {
         e.preventDefault();
@@ -39,7 +41,22 @@ export default function Nutricionista_cadastro() {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             console.log('✅ Sucesso no cadastro:', response.data.message);
-            navigate('/');
+
+            // Cria objeto de usuário no mesmo formato do backend/login e atualiza o contexto
+            const usuarioRetornado = {
+                id: response.data.id,
+                nome: response.data.nome,
+                email: response.data.email,
+                telefone: response.data.telefone,
+                crn_regiao: response.data.crn_regiao,
+                crn_numero: response.data.crn_numero,
+                tipo: 'nutricionista'
+            };
+
+            login(usuarioRetornado);
+
+            // Redireciona para a tela de validação do CRN passando o ID do usuário
+            navigate('/cadastro/crn-validacao', { state: { usuarioId: response.data.id } });
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);

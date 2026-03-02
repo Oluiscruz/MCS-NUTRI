@@ -1,12 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Bungee+Hairline&family=Delius+Unicase:wght@400;700&family=Fjalla+One&family=Karla:ital,wght@0,200..800;1,200..800&family=Lexend+Deca:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&family=Voces&display=swap');
 
 :root {
-    --nCor1: #120907;
-    --nCor2: #202134;
-    --nCor3: #565f85;
-    --nCor4: #96a0e5;
-    --nCor5: #cdcaff;
+    /* Paleta de Cores Moderna */
+    --primary: #4F46E5;
+    /* Índigo principal */
+    --primary-hover: #4338CA;
+    --primary-light: #EEF2FF;
+    --success: #10B981;
+    /* Verde sucesso */
+    --success-hover: #059669;
+    --success-light: #D1FAE5;
+    --danger: #EF4444;
+    /* Vermelho erro */
+    --danger-light: #FEE2E2;
+
+    --text-main: #111827;
+    /* Quase preto para títulos */
+    --text-muted: #6B7280;
+    /* Cinza para textos secundários */
+
+    --bg-page: #F3F4F6;
+    /* Fundo da página */
+    --bg-card: #FFFFFF;
+    /* Fundo dos cards */
+    --border-color: #E5E7EB;
+    /* Bordas sutis */
 }
+
 
 
 
@@ -17,7 +37,7 @@
         width: 250px;
         height: 100%;
         padding: 10px 14px;
-        background-color: var(--nCor4);
+        background-color: var(--primary);
         transition: all 0.3s ease-in-out;
 
         .logo-nutri {

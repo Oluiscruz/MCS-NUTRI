@@ -71,7 +71,7 @@ export default function Section() {
             {showModal && (
                 <div className="modal-overlay" onClick={fecharModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button" onClick={fecharModal}>Fechar</button>
+                        <button className="close-button" onClick={fecharModal}>x</button>
                         <div className="resultado">
                             <h2>Seu IMC é: <span>{imc}</span></h2>
                             <p className={`imc-category ${imc < 18.5 ? 'abaixo-peso' :

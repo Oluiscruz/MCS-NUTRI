@@ -1,0 +1,192 @@
+:root {
+    /* Paleta de Cores Moderna */
+    --primary: #4F46E5;
+    /* Índigo principal */
+    --primary-hover: #4338CA;
+    --primary-light: #EEF2FF;
+    --success: #10B981;
+    /* Verde sucesso */
+    --success-hover: #059669;
+    --success-light: #D1FAE5;
+    --danger: #EF4444;
+    /* Vermelho erro */
+    --danger-light: #FEE2E2;
+
+    --text-main: #111827;
+    /* Quase preto para títulos */
+    --text-muted: #6B7280;
+    /* Cinza para textos secundários */
+
+    --bg-page: #F3F4F6;
+    /* Fundo da página */
+    --bg-card: #FFFFFF;
+    /* Fundo dos cards */
+    --border-color: #E5E7EB;
+    /* Bordas sutis */
+}
+
+.ficha-paciente-container {
+    max-width: 1000px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+
+    .header-ficha {
+        padding: 15px;
+        margin-bottom: 2rem;
+
+
+        .btn-acoes {
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            button {
+                display: flex;
+                font-size: 0.8rem;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                background: var(--text-main);
+                border-radius: 8px;
+                color: var(--white);
+                outline: none;
+                transition: all 0.25s ease;
+
+                &:hover {
+                    transform: scale(0.97);
+                }
+            }
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p,
+            em {
+                font-size: 0.9rem;
+            }
+        }
+
+    }
+        .mensagem{
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .salvou-ficha {
+            padding: 8px;
+            background: var(--success);
+            color: var(--bg-card);
+            font-weight: 600;
+            border-radius: 6px;
+        }
+        
+        .error-ficha {
+            padding: 8px;
+            background: var(--danger);
+            color: var(--bg-card);
+            font-weight: 600;
+            border-radius: 6px;
+        }
+        }
+        
+
+    .ficha-paciente-form {
+        display: flex;
+        flex-direction: column;
+
+        background: var(--bg-card);
+        border-radius: 12px;
+        padding: 2rem 2.5rem;
+        border: 1px solid var(--border-color);
+        gap: 8px;
+
+        label {
+            font-weight: 600;
+            font-size: 0.8rem;
+
+            span {
+                color: var(--danger);
+            }
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--primary-hover);
+            border-radius: 8px;
+
+            color: var(--text-main);
+            padding: 8px 15px;
+            outline: none;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            border-radius: 8px;
+            outline: none;
+            background: var(--primary);
+            transition: all 0.25s ease;
+
+            &:hover {
+                background: var(--primary-hover);
+                transform: scale(0.97);
+            }
+        }
+
+    }
+
+    .overlay-sucess{
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(17, 24, 39, 0.711);
+        backdrop-filter: blur(4px); /* Efeito de vidro */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+
+        .overlay-content{
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+            .modal-icon-wrapper {
+                margin-bottom: 1rem;
+                .icon-success {
+                    color: var(--success);
+                }
+            }
+
+            h3{
+                margin-bottom: 4px;
+            }
+
+            button{
+                margin-top: 20px;
+                background: var(--primary);
+                outline: none;
+                border: none;
+                color: var(--bg-card);
+                
+            }
+        }
+    }
+}

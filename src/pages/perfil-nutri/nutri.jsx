@@ -10,6 +10,7 @@ export default function Nutricionista_perfil() {
 
     const navigate = useNavigate() 
     const handleAgenda = () => { navigate('/nutricionista/agenda') }
+    const handlePacientes = () => { navigate('/nutricionista/visualizar-pacientes') }
 
 
 
@@ -41,7 +42,7 @@ export default function Nutricionista_perfil() {
                             </li>
                         </ul>
 
-                        <ul className="box" >
+                        <ul className="box" onClick={handlePacientes}>
                             <li className="text">
                                 <div className="icon">
                                     <i><User size={28} /></i>
