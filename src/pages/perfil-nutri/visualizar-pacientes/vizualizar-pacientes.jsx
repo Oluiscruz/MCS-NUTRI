@@ -52,22 +52,42 @@ export default function VisualizarPacientes() {
     console.log("🔄 Atualizando status:", { agendamentoId, novoStatus });
     try {
       setUpdatingStatusId(agendamentoId);
-      const response = await axios.patch(`/api/nutricionista/agendamento/alterar-status`, {
-        status: novoStatus,
-        nutricionista_id: usuario.id,
-        agendamento_id: agendamentoId,
-      });
+      const response = await axios.patch(
+        `/api/nutricionista/agendamento/alterar-status`,
+        {
+          status: novoStatus,
+          nutricionista_id: usuario.id,
+          agendamento_id: agendamentoId,
+        },
+      );
       console.log("✅ Resposta do servidor:", response.data);
 
-      // Atualiza o estado local imediatamente após sucesso para refletir a mudança no UI.
-      const novosAgendamentos = agendamentos.map((ag) =>
-        ag.agendamento_id === agendamentoId ? { ...ag, status: novoStatus } : ag,
-      );
-      console.log("📋 Agendamentos atualizados:", novosAgendamentos);
-      setAgendamentos(novosAgendamentos);
+      // Se o status for 'concluido', remover da lista de agendamentos
+      if (novoStatus.toLowerCase() === 'concluido') {
+        const novosAgendamentos = agendamentos.filter(
+          (ag) => ag.agendamento_id !== agendamentoId
+        );
+        setAgendamentos(novosAgendamentos);
+        
+        setConfirmMsgs((prev) => ({
+          ...prev,
+          [agendamentoId]: `Agendamento movido para o histórico!`,
+        }));
+      } else {
+        // Para outros status, apenas atualizar o status localmente
+        const novosAgendamentos = agendamentos.map((ag) =>
+          ag.agendamento_id === agendamentoId
+            ? { ...ag, status: novoStatus }
+            : ag,
+        );
+        setAgendamentos(novosAgendamentos);
+        
+        setConfirmMsgs((prev) => ({
+          ...prev,
+          [agendamentoId]: `Status atualizado para "${novoStatus}"!`,
+        }));
+      }
 
-      // set o status-agendamento por item e exibe mensagem de confirmação temporária.
-      setConfirmMsgs((prev) => ({ ...prev, [agendamentoId]: `Status atualizado para "${novoStatus}"!` }));
       setTimeout(() => {
         setConfirmMsgs((prev) => {
           const copy = { ...prev };
@@ -80,7 +100,8 @@ export default function VisualizarPacientes() {
       setTimeout(() => setModalOpenId(null), 2000);
 
       // Enviar email ao paciente (status capitalizado)
-      const statusCapitalizado = novoStatus.charAt(0).toUpperCase() + novoStatus.slice(1);
+      const statusCapitalizado =
+        novoStatus.charAt(0).toUpperCase() + novoStatus.slice(1);
       await axios.post("/api/nutricionista/notificar-paciente", {
         agendamento_id: agendamentoId,
         status: statusCapitalizado,
@@ -131,8 +152,8 @@ export default function VisualizarPacientes() {
     navigate("/nutricionista/perfil");
   };
 
-  const emBreve = () => {
-    alert("🚧🔨 Em breve esta funcionalidade estará disponível!");
+  const historico = () => {
+    navigate("/nutricionista/historico-consultas");
   };
 
   return (
@@ -153,7 +174,7 @@ export default function VisualizarPacientes() {
           <button className="btn-back" onClick={voltar}>
             <ArrowLeft size={20} /> Voltar ao Perfil
           </button>
-          <button className="historico" onClick={emBreve}>
+          <button className="historico" onClick={historico}>
             <ClipboardClock size={20} /> Histórico de Pacientes
           </button>
         </div>
@@ -215,11 +236,14 @@ export default function VisualizarPacientes() {
                         const statusRaw = String(agendamento.status || "");
                         const statusNorm = statusRaw.toLowerCase();
                         const statusDisplay = statusRaw
-                          ? statusRaw.charAt(0).toUpperCase() + statusRaw.slice(1)
+                          ? statusRaw.charAt(0).toUpperCase() +
+                          statusRaw.slice(1)
                           : "-";
                         return (
                           <>
-                            <span className={`status-${statusNorm}`}>{statusDisplay}</span>
+                            <span className={`status-${statusNorm}`}>
+                              {statusDisplay}
+                            </span>
                             <button
                               className="show-modal-status"
                               onClick={() =>
@@ -241,9 +265,13 @@ export default function VisualizarPacientes() {
 
                     {modalOpenId === agendamento.agendamento_id && (
                       <div
-                        className="status-modal" onClick={() => setModalOpenId(null)}>
+                        className="status-modal"
+                        onClick={() => setModalOpenId(null)}
+                      >
                         {confirmMsgs[agendamento.agendamento_id] && (
-                          <p className="confirm-msg">{confirmMsgs[agendamento.agendamento_id]}</p>
+                          <p className="confirm-msg">
+                            {confirmMsgs[agendamento.agendamento_id]}
+                          </p>
                         )}
                         <div
                           className="status-modal-content"
@@ -251,32 +279,60 @@ export default function VisualizarPacientes() {
                         >
                           <p>Alterar Status do Agendamento</p>
                           <div className="status-opcoes">
-
                             <button
-                              onClick={() => atualizarStatus(agendamento.agendamento_id, "confirmado")}
-                              disabled={updatingStatusId === agendamento.agendamento_id}>
-                              {updatingStatusId === agendamento.agendamento_id ? "Atualizando..." : "Confirmar"}
+                              onClick={() =>
+                                atualizarStatus(
+                                  agendamento.agendamento_id,
+                                  "confirmado",
+                                )
+                              }
+                              disabled={
+                                updatingStatusId === agendamento.agendamento_id
+                              }
+                            >
+                              {updatingStatusId === agendamento.agendamento_id
+                                ? "Atualizando..."
+                                : "Confirmar"}
                             </button>
 
                             <button
-                              onClick={() => atualizarStatus(agendamento.agendamento_id, "cancelado")}
-                              disabled={updatingStatusId === agendamento.agendamento_id}>
-                              {updatingStatusId === agendamento.agendamento_id ? "Atualizando..." : "Cancelar"}
+                              onClick={() =>
+                                atualizarStatus(
+                                  agendamento.agendamento_id,
+                                  "cancelado",
+                                )
+                              }
+                              disabled={
+                                updatingStatusId === agendamento.agendamento_id
+                              }
+                            >
+                              {updatingStatusId === agendamento.agendamento_id
+                                ? "Atualizando..."
+                                : "Cancelar"}
                             </button>
 
                             <button
-                              onClick={() => atualizarStatus(agendamento.agendamento_id, "concluido")}
-                              disabled={updatingStatusId === agendamento.agendamento_id}>
-                              {updatingStatusId === agendamento.agendamento_id ? "Atualizando..." : "Concluído"}
+                              onClick={() =>
+                                atualizarStatus(
+                                  agendamento.agendamento_id,
+                                  "concluido",
+                                )
+                              }
+                              disabled={
+                                updatingStatusId === agendamento.agendamento_id
+                              }
+                            >
+                              {updatingStatusId === agendamento.agendamento_id
+                                ? "Atualizando..."
+                                : "Concluído"}
                             </button>
-
                           </div>
                           <button
                             className="fechar-modal"
-                            onClick={() => setModalOpenId(null)}>
+                            onClick={() => setModalOpenId(null)}
+                          >
                             Fechar
                           </button>
-
                         </div>
                       </div>
                     )}
@@ -286,33 +342,33 @@ export default function VisualizarPacientes() {
 
                   {(agendamento.status === "pendente" ||
                     agendamento.status === "Pendente") && (
-                    <div className="acoes">
-                      <button
-                        className="btn-confirmar"
-                        onClick={() => {
-                          console.log("Botão confirmar clicado!");
-                          atualizarStatus(
-                            agendamento.agendamento_id,
-                            "confirmado",
-                          );
-                        }}
-                      >
-                        Confirmar
-                      </button>
-                      <button
-                        className="btn-recusar"
-                        onClick={() => {
-                          console.log("Botão recusar clicado!");
-                          atualizarStatus(
-                            agendamento.agendamento_id,
-                            "cancelado",
-                          );
-                        }}
-                      >
-                        Recusar
-                      </button>
-                    </div>
-                  )}
+                      <div className="acoes">
+                        <button
+                          className="btn-confirmar"
+                          onClick={() => {
+                            console.log("Botão confirmar clicado!");
+                            atualizarStatus(
+                              agendamento.agendamento_id,
+                              "confirmado",
+                            );
+                          }}
+                        >
+                          Confirmar
+                        </button>
+                        <button
+                          className="btn-recusar"
+                          onClick={() => {
+                            console.log("Botão recusar clicado!");
+                            atualizarStatus(
+                              agendamento.agendamento_id,
+                              "cancelado",
+                            );
+                          }}
+                        >
+                          Recusar
+                        </button>
+                      </div>
+                    )}
                 </div>
               </div>
             );
