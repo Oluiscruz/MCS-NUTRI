@@ -47,9 +47,9 @@ export default function Paciente_login() {
 
     // Função para o Login com Google
     const handleGoogleLogin = () => {
-        // Importante: No React, NÃO usamos fetch() ou axios para o OAuth do Google.
-        // Precisamos redirecionar a página inteira para que o usuário veja a tela do Google.
-        window.location.href = '/api/auth/google';
+        // Redireciona para o endpoint do backend. Usa VITE_API_URL se disponível.
+        const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        window.location.href = `${apiBase}/api/auth/google`;
     };
 
     return (
