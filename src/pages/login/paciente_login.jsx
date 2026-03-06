@@ -49,7 +49,7 @@ export default function Paciente_login() {
     const handleGoogleLogin = () => {
         // Importante: No React, NÃO usamos fetch() ou axios para o OAuth do Google.
         // Precisamos redirecionar a página inteira para que o usuário veja a tela do Google.
-        window.location.href = 'http://localhost:3000/api/auth/google';
+        window.location.href = '/api/auth/google';
     };
 
     return (
