@@ -63,12 +63,12 @@ export default function VisualizarPacientes() {
       console.log("✅ Resposta do servidor:", response.data);
 
       // Se o status for 'concluido', remover da lista de agendamentos
-      if (novoStatus.toLowerCase() === 'concluido') {
+      if (novoStatus.toLowerCase() === "concluido") {
         const novosAgendamentos = agendamentos.filter(
-          (ag) => ag.agendamento_id !== agendamentoId
+          (ag) => ag.agendamento_id !== agendamentoId,
         );
         setAgendamentos(novosAgendamentos);
-        
+
         setConfirmMsgs((prev) => ({
           ...prev,
           [agendamentoId]: `Agendamento movido para o histórico!`,
@@ -81,7 +81,7 @@ export default function VisualizarPacientes() {
             : ag,
         );
         setAgendamentos(novosAgendamentos);
-        
+
         setConfirmMsgs((prev) => ({
           ...prev,
           [agendamentoId]: `Status atualizado para "${novoStatus}"!`,
@@ -181,6 +181,9 @@ export default function VisualizarPacientes() {
       </header>
 
       <div className="content-pacientes">
+        <div className="loading">
+
+          </div>
         {loading ? (
           <p>Carregando agendamentos...</p>
         ) : agendamentos.length === 0 ? (
@@ -220,14 +223,14 @@ export default function VisualizarPacientes() {
                     <strong>Email:</strong> {agendamento.paciente_email}
                   </p>
                   <p className="p-info">
-                    <strong>Telefone:</strong> {agendamento.paciente_telefone}
+                    <strong>Telefone:</strong> {agendamento.paciente_telefone || 'Não informado'}
                   </p>
                   <p className="p-info">
                     <strong>Data:</strong> {agendamento.dia}/
-                    {agendamento.mes_ano}/{agendamento.ano}
+                    {agendamento.mes}/{agendamento.ano}
                   </p>
                   <p className="p-info">
-                    <strong>Horário:</strong> {agendamento.hora_agendamento}
+                    <strong>Horário:</strong> {agendamento.hora_agendamento}h
                   </p>
                   <p className="p-info">
                     <div className="div-p-info-status">
@@ -237,7 +240,7 @@ export default function VisualizarPacientes() {
                         const statusNorm = statusRaw.toLowerCase();
                         const statusDisplay = statusRaw
                           ? statusRaw.charAt(0).toUpperCase() +
-                          statusRaw.slice(1)
+                            statusRaw.slice(1)
                           : "-";
                         return (
                           <>
@@ -283,7 +286,7 @@ export default function VisualizarPacientes() {
                               onClick={() =>
                                 atualizarStatus(
                                   agendamento.agendamento_id,
-                                  "confirmado",
+                                  "Confirmado",
                                 )
                               }
                               disabled={
@@ -299,7 +302,7 @@ export default function VisualizarPacientes() {
                               onClick={() =>
                                 atualizarStatus(
                                   agendamento.agendamento_id,
-                                  "cancelado",
+                                  "Cancelado",
                                 )
                               }
                               disabled={
@@ -315,7 +318,7 @@ export default function VisualizarPacientes() {
                               onClick={() =>
                                 atualizarStatus(
                                   agendamento.agendamento_id,
-                                  "concluido",
+                                  "Concluído",
                                 )
                               }
                               disabled={
@@ -342,33 +345,33 @@ export default function VisualizarPacientes() {
 
                   {(agendamento.status === "pendente" ||
                     agendamento.status === "Pendente") && (
-                      <div className="acoes">
-                        <button
-                          className="btn-confirmar"
-                          onClick={() => {
-                            console.log("Botão confirmar clicado!");
-                            atualizarStatus(
-                              agendamento.agendamento_id,
-                              "confirmado",
-                            );
-                          }}
-                        >
-                          Confirmar
-                        </button>
-                        <button
-                          className="btn-recusar"
-                          onClick={() => {
-                            console.log("Botão recusar clicado!");
-                            atualizarStatus(
-                              agendamento.agendamento_id,
-                              "cancelado",
-                            );
-                          }}
-                        >
-                          Recusar
-                        </button>
-                      </div>
-                    )}
+                    <div className="acoes">
+                      <button
+                        className="btn-confirmar"
+                        onClick={() => {
+                          console.log("Botão confirmar clicado!");
+                          atualizarStatus(
+                            agendamento.agendamento_id,
+                            "Confirmado",
+                          );
+                        }}
+                      >
+                        Confirmar
+                      </button>
+                      <button
+                        className="btn-recusar"
+                        onClick={() => {
+                          console.log("Botão recusar clicado!");
+                          atualizarStatus(
+                            agendamento.agendamento_id,
+                            "Cancelado",
+                          );
+                        }}
+                      >
+                        Recusar
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             );

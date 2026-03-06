@@ -19,7 +19,9 @@ import HistoricoConsultas from './pages/perfil-nutri/visualizar-pacientes/histor
 import FichaPaciente from './pages/perfil-paciente/Ficha-paciente.jsx';
 import './styles/index.scss'
 
-axios.defaults.baseURL = 'http://localhost:3000';
+// Configuração do Axios
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
