@@ -203,7 +203,7 @@ export default function AgendarConsulta() {
                 </div>
 
                 <div className="select-nutricionista">
-                    <label htmlFor="nutri-select">Selecione um profissional e preencha sua ficha</label>
+                    <label>Selecione um profissional e preencha sua ficha</label>
                     <div className="select-wrapper">
                         <UserCircle className="select-icon" size={20} />
                         <select
