@@ -53,6 +53,8 @@ export default function AgendarConsulta() {
                     params: { nutricionista_id: nutriSelecionado }
                 });
 
+                console.log('Dias disponíveis recebidos:', responseDias.data.dias);
+                console.log('Horários ocupados recebidos:', responseOcupados.data.ocupados);
 
                 setDiasDisponiveis(responseDias.data.dias || []);
                 // backend returns { ocupados } — usar o nome correto
@@ -100,7 +102,7 @@ export default function AgendarConsulta() {
         setHorarioEscolhido(null);
 
         const meses = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
             'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
 
@@ -140,15 +142,22 @@ export default function AgendarConsulta() {
             if (!diasDisponiveis || diasDisponiveis.length === 0) return true;
 
             const meses = [
-                'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
                 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
             ];
 
-            const taDisponivel = diasDisponiveis.some(d =>
-                d.dia === date.getDate() &&
-                d.mes === meses[date.getMonth()] &&
-                d.ano === date.getFullYear()
-            );
+            const diaNum = date.getDate();
+            const mesNome = meses[date.getMonth()];
+            const anoNum = date.getFullYear();
+
+            const taDisponivel = diasDisponiveis.some(d => {
+                const match = d.dia === diaNum && d.mes === mesNome && d.ano === anoNum;
+                if (match) {
+                    console.log(`Dia disponível encontrado: ${diaNum}/${mesNome}/${anoNum}`);
+                }
+                return match;
+            });
+            
             return !taDisponivel;
         }
         return false;
