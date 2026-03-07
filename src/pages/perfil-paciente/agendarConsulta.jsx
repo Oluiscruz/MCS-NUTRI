@@ -312,9 +312,9 @@ export default function AgendarConsulta() {
                         <div className="modal-icon-wrapper">
                             <CheckCircle size={48} className="icon-success" />
                         </div>
-                        <h2>Agendamento Confirmado!</h2>
-                        <p>Sua consulta foi reservada com sucesso.</p>
-                        <p className="modal-subtext">Enviamos um e-mail com todos os detalhes, incluindo endereço e preparações para a consulta.</p>
+                        <h2>Agendamento enviado para nutricionista!</h2>
+                        <p>Aguarde a confirmação</p>
+                        <p className="modal-subtext">Um e-mail de confirmação ou cancelamento será enviado com todas as informações</p>
                         <button className="btn-fechar" onClick={fecharModal}>Ir para a tela inicial</button>
                     </div>
                 </div>
