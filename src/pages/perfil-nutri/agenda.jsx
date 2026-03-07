@@ -2,7 +2,7 @@ import { Calendar } from "react-calendar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Clock, Calendar as CalendarIcon, Settings, AlertCircle } from 'lucide-react';
 import '../../styles/perfil-nutri/agenda.scss';
-import 'react-calendar/dist/Calendar.css';
+import '../../styles/react-calendar.css'
 import { UseAuth } from "../../context/context";
 import { useState } from "react";
 import axios from "axios";

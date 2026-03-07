@@ -4,7 +4,7 @@ import axios from "axios";
 import { UseAuth } from "../../context/context";
 import { Calendar } from 'react-calendar';
 import { ArrowLeft, Calendar as CalendarIcon, Clock, LogOut, UserCircle, CheckCircle, ClipboardClock } from 'lucide-react';
-import 'react-calendar/dist/Calendar.css'; // Garantir que o CSS base do calendário seja importado
+import '../../styles/react-calendar.css'
 import '../../styles/perfil-paciente/agendarConsulta.scss';
 
 export default function AgendarConsulta() {

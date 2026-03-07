@@ -1,0 +1,115 @@
+/* Customização do React Calendar - Estilo Nutricionista Moderno */
+.react-calendar {
+  width: 100%;
+  max-width: 450px;
+  background: white;
+  border: none !important; /* Removemos a borda para usar o card do container */
+  font-family: 'Inter', sans-serif;
+  line-height: 1.125em;
+}
+
+/* 1. Navegação (Mês/Ano) */
+.react-calendar__navigation {
+  display: flex;
+  height: 48px;
+  margin-bottom: 1em;
+  background: #f8f9fc;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: var(--white);
+  color: var(--primary-light);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: transparent;
+  opacity: 0.3;
+}
+
+/* 2. Dias da Semana (Seg, Ter...) */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding-bottom: 10px;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* 3. Grid de Dias */
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 14px 10px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-main);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+/* Hover nos dias */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: var(--bg-body);
+  color: var(--primary);
+}
+
+/* 4. Estado: Hoje */
+.react-calendar__tile--now {
+  background: var(--accent) !important;
+  color: var(--primary) !important;
+  font-weight: 700;
+}
+
+/* 5. Estado: Dia Selecionado */
+.react-calendar__tile--active {
+  background: var(--primary) !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(86, 95, 133, 0.3);
+}
+
+/* 6. Dias Desativados (Datas Passadas) */
+.react-calendar__tile:disabled {
+  background-color: transparent !important;
+  color: #d1d5db !important;
+  cursor: not-allowed;
+}
+
+/* 7. Final de Semana e Meses Vizinhos */
+.react-calendar__month-view__days__day--weekend {
+  color: #ef4444; /* Um vermelho mais suave e moderno */
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #9ca3af !important;
+  opacity: 0.5;
+}
+
+/* 8. Ajustes de Responsividade Interna */
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
