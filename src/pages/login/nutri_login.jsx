@@ -28,11 +28,20 @@ export default function Nutricionista_login() {
 
         try {
             const response = await axios.post('/api/nutricionista/login', dadosNutri);
+            
+            if (!response || !response.data) {
+                throw new Error('Resposta inválida do servidor');
+            }
+            
             alert(`${response.data.message}`);
 
             const usuarioRetornado = response.data.usuario || response.data.user;
+            
+            if (!usuarioRetornado || !usuarioRetornado.id) {
+                throw new Error('Dados do usuário inválidos');
+            }
 
-            if (usuarioRetornado && !usuarioRetornado.tipo) {
+            if (!usuarioRetornado.tipo) {
                 usuarioRetornado.tipo = 'nutricionista';
             }
 
@@ -41,8 +50,8 @@ export default function Nutricionista_login() {
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
-            const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
-            alert(`❌ Falha no login ${msgErro}`);
+            const msgErro = error.response?.data?.message || error.message || 'Erro de conexão com o servidor.';
+            alert(`❌ Falha no login: ${msgErro}`);
         } finally {
             setLoading(false);
         }

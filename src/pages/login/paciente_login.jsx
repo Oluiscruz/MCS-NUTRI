@@ -29,16 +29,26 @@ export default function Paciente_login() {
 
         try {
             const response = await axios.post('/api/paciente/login', dadosPaciente);
+            
+            if (!response || !response.data) {
+                throw new Error('Resposta inválida do servidor');
+            }
+            
             alert(`${response.data.message}`);
             
             const usuarioRetornado = response.data.usuario;
+            
+            if (!usuarioRetornado || !usuarioRetornado.id) {
+                throw new Error('Dados do usuário inválidos');
+            }
+            
             login(usuarioRetornado);
             navigate('/paciente/agendar-consulta');
             
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
-            const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
-            alert(`❌ Falha no login ${msgErro}`);
+            const msgErro = error.response?.data?.message || error.message || 'Erro de conexão com o servidor.';
+            alert(`❌ Falha no login: ${msgErro}`);
         } finally {
             setLoading(false);
         }
