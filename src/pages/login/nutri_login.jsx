@@ -10,6 +10,7 @@ export default function Nutricionista_login() {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
     const { login } = UseAuth();
@@ -21,37 +22,30 @@ export default function Nutricionista_login() {
 
     async function handleLogin(e) {
         e.preventDefault();
+        setLoading(true);
 
-        // Lógica de autenticação aqui
-        const dadosNutri = {
-            email,
-            senha,
-        };
+        const dadosNutri = { email, senha };
 
         try {
             const response = await axios.post('/api/nutricionista/login', dadosNutri);
             alert(`${response.data.message}`);
 
-            // Extrai o objeto de usuário retornado pela API (compatível com diferentes formatos)
             const usuarioRetornado = response.data.usuario || response.data.user;
 
-            // Identifica o tipo de usuário para renderização condicional no front-end
             if (usuarioRetornado && !usuarioRetornado.tipo) {
                 usuarioRetornado.tipo = 'nutricionista';
             }
 
-            // Atualiza o contexto e localStorage via `login` do AppContext
             login(usuarioRetornado);
-
-            // Redireciona para dashboard do médico após login
             navigate('/');
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
             const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
             alert(`❌ Falha no login ${msgErro}`);
+        } finally {
+            setLoading(false);
         }
-
     }
 
 
@@ -83,7 +77,9 @@ export default function Nutricionista_login() {
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)} />
                 </form>
-                <button onClick={handleLogin}>Entrar</button>
+                <button onClick={handleLogin} disabled={loading}>
+            {loading ? 'Entrando...' : 'Entrar'}
+        </button>
                 <div className="ir-cadastrar">
                     <p>Não tem uma conta? <Link to='/nutricionista/cadastro'>Cadastre-se</Link></p>
                 </div>

@@ -11,6 +11,7 @@ export default function Paciente_login() {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const {login} = UseAuth();
     const navigate = useNavigate();
@@ -22,12 +23,9 @@ export default function Paciente_login() {
 
     async function handleLogin(e) {
         e.preventDefault();
+        setLoading(true);
         
-        // Lógica de autenticação aqui
-        const dadosPaciente = {
-            email,
-            senha
-        };
+        const dadosPaciente = { email, senha };
 
         try {
             const response = await axios.post('/api/paciente/login', dadosPaciente);
@@ -41,8 +39,9 @@ export default function Paciente_login() {
             console.error('❌ Erro de conexão com servidor:', error);
             const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
             alert(`❌ Falha no login ${msgErro}`);
+        } finally {
+            setLoading(false);
         }
-
     }
 
     // Função para o Login com Google
@@ -77,7 +76,9 @@ export default function Paciente_login() {
                             placeholder='******'
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)} />
-                        <button type="submit">Entrar</button>
+                        <button type="submit" disabled={loading}>
+                            {loading ? 'Entrando...' : 'Entrar'}
+                        </button>
 
                         <div className="or">
                             <div className="bar"></div>

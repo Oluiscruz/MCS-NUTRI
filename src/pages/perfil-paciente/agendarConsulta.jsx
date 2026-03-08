@@ -17,6 +17,8 @@ export default function AgendarConsulta() {
     const [nutricionistas, setNutricionistas] = useState([]);
     const [confirmModal, setConfirmModal] = useState(false);
     const [erro, setErro] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [loadingAgenda, setLoadingAgenda] = useState(false);
 
     const { usuario, logout } = UseAuth();
     const navigate = useNavigate();
@@ -34,7 +36,7 @@ export default function AgendarConsulta() {
     }, []);
 
     useEffect(() => {
-        setErro(''); // Limpa erros ao trocar de profissional
+        setErro('');
         if (!nutriSelecionado) {
             setDiasDisponiveis([]);
             setHorariosOcupados([])
@@ -42,13 +44,12 @@ export default function AgendarConsulta() {
         }
 
         async function fetchAgenda() {
+            setLoadingAgenda(true);
             try {
-                // Busca os dias de trabalho
                 const responseDias = await axios.get('/api/nutricionista/agenda/dias-disponiveis', {
                     params: { nutricionista_id: nutriSelecionado }
                 });
 
-                // Busca os horários que JÁ FORAM agendados por outros pacientes
                 const responseOcupados = await axios.get('/api/nutricionista/agenda/horarios-ocupados', {
                     params: { nutricionista_id: nutriSelecionado }
                 });
@@ -57,7 +58,6 @@ export default function AgendarConsulta() {
                 console.log('Horários ocupados recebidos:', responseOcupados.data.ocupados);
 
                 setDiasDisponiveis(responseDias.data.dias || []);
-                // backend returns { ocupados } — usar o nome correto
                 setHorariosOcupados(responseOcupados.data.ocupados || []);
 
                 if (!responseDias.data.dias || responseDias.data.dias.length === 0) {
@@ -67,6 +67,8 @@ export default function AgendarConsulta() {
             } catch (error) {
                 console.error("Erro ao buscar agenda: ", error);
                 setErro("Não foi possível carregar a agenda. Tente novamente mais tarde.");
+            } finally {
+                setLoadingAgenda(false);
             }
         }
 
@@ -165,6 +167,7 @@ export default function AgendarConsulta() {
 
     const handleConfirmar = async () => {
         if (!dataSelecionada || !horarioEscolhido) return;
+        setLoading(true);
 
         try {
             await axios.post(`/api/paciente/agendamento/novo`, {
@@ -179,6 +182,8 @@ export default function AgendarConsulta() {
         } catch (error) {
             const msgError = error.response?.data?.message || "Não foi possível concluir o agendamento.";
             setErro(msgError);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -252,6 +257,11 @@ export default function AgendarConsulta() {
                         <div className="empty-state">
                             <p>👆 Selecione um profissional acima para visualizar o calendário.</p>
                         </div>
+                    ) : loadingAgenda ? (
+                        <div className="empty-state">
+                            <div className="spinner"></div>
+                            <p>Carregando agenda...</p>
+                        </div>
                     ) : (
                         <Calendar
                             onChange={handleCalendario}
@@ -297,8 +307,8 @@ export default function AgendarConsulta() {
                             <div className="info-box">
                                 <p>Sua consulta será no dia <strong>{dataSelecionada.toLocaleDateString('pt-BR')}</strong> às <strong>{horarioEscolhido}</strong>.</p>
                             </div>
-                            <button className="btn-confirmar" onClick={handleConfirmar}>
-                                Confirmar Agendamento
+                            <button className="btn-confirmar" onClick={handleConfirmar} disabled={loading}>
+                                {loading ? 'Confirmando...' : 'Confirmar Agendamento'}
                             </button>
                         </div>
                     )}

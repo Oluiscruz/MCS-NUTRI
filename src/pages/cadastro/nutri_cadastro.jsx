@@ -15,6 +15,7 @@ export default function Nutricionista_cadastro() {
     const [crn_documento, set_crn_documento] = useState(null);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = UseAuth();
 
@@ -25,8 +26,8 @@ export default function Nutricionista_cadastro() {
 
     async function handleCadastro(e) {
         e.preventDefault();
+        setLoading(true);
 
-        // Monta FormData para enviar o arquivo junto com os campos
         const formData = new FormData();
         formData.append('nome', nome);
         formData.append('telefone', telefone);
@@ -42,7 +43,6 @@ export default function Nutricionista_cadastro() {
             });
             console.log('✅ Sucesso no cadastro:', response.data.message);
 
-            // Cria objeto de usuário no mesmo formato do backend/login e atualiza o contexto
             const usuarioRetornado = {
                 id: response.data.id,
                 nome: response.data.nome,
@@ -54,14 +54,14 @@ export default function Nutricionista_cadastro() {
             };
 
             login(usuarioRetornado);
-
-            // Redireciona para a tela de validação do CRN passando o ID do usuário
             navigate('/cadastro/crn-validacao', { state: { usuarioId: response.data.id } });
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
             const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
             alert(`❌ Falha no cadastro ${msgErro}`);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -139,7 +139,9 @@ export default function Nutricionista_cadastro() {
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)} />
 
-                        <button onClick={handleCadastro}>Cadastrar</button>
+                        <button onClick={handleCadastro} disabled={loading}>
+                            {loading ? 'Cadastrando...' : 'Cadastrar'}
+                        </button>
 
                         <div className="ir-logar">
                             <p>Já possui uma conta? <Link to='/nutricionista/login'>Fazer login</Link></p>

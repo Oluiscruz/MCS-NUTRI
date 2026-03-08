@@ -20,6 +20,8 @@ export default function VisualizarPacientes() {
   const [modalOpenId, setModalOpenId] = useState(null);
   const [confirmMsgs, setConfirmMsgs] = useState({});
   const [updatingStatusId, setUpdatingStatusId] = useState(null);
+  const [loadingFicha, setLoadingFicha] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   // Buscar agendamentos quando o componente carregar ou quando o usuário mudar
   useEffect(() => {
@@ -115,6 +117,7 @@ export default function VisualizarPacientes() {
 
   // 3. Função para visualizar a ficha de anamnese do paciente
   async function handleVerFicha(pacienteId) {
+    setLoadingFicha(true);
     try {
       const response = await axios.get(
         `/api/nutricionista/ficha/${pacienteId}`,
@@ -127,6 +130,8 @@ export default function VisualizarPacientes() {
       alert(
         "❌ Erro ao carregar ficha do paciente. Tente novamente mais tarde.",
       );
+    } finally {
+      setLoadingFicha(false);
     }
   }
 
@@ -136,14 +141,17 @@ export default function VisualizarPacientes() {
       return;
     }
 
+    setDeletingId(agendamentoId);
     try {
       const response = await axios.delete(
         `/api/nutricionista/agendamento/${agendamentoId}`,
       );
       console.log("✅ Agendamento apagado:", response.data);
-      fetchAgendamentos(); // Atualiza a lista de agendamentos após apagar
+      fetchAgendamentos();
     } catch (error) {
       console.error("❌ Erro ao apagar agendamento:", error);
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -172,20 +180,20 @@ export default function VisualizarPacientes() {
         </div>
         <div className="btn-acoes">
           <button className="btn-back" onClick={voltar}>
-            <ArrowLeft size={20} /> Voltar ao Perfil
+            <ArrowLeft size={20} /> Voltar
           </button>
           <button className="historico" onClick={historico}>
-            <ClipboardClock size={20} /> Histórico de Pacientes
+            <ClipboardClock size={20} /> Histórico
           </button>
         </div>
       </header>
 
       <div className="content-pacientes">
-        <div className="loading">
-
-          </div>
         {loading ? (
-          <p>Carregando agendamentos...</p>
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Carregando agendamentos...</p>
+          </div>
         ) : agendamentos.length === 0 ? (
           <p>Nenhum agendamento encontrado.</p>
         ) : (
@@ -204,17 +212,19 @@ export default function VisualizarPacientes() {
                     <button
                       className="ver-ficha"
                       onClick={() => handleVerFicha(agendamento.paciente_id)}
+                      disabled={loadingFicha}
                     >
-                      <FilePlusCorner size={16} /> Ficha
+                      <FilePlusCorner size={16} /> {loadingFicha ? 'Carregando...' : 'Ficha'}
                     </button>
                     <button
                       className="apagar"
                       onClick={() =>
                         handleApagarAgendamento(agendamento.agendamento_id)
                       }
+                      disabled={deletingId === agendamento.agendamento_id}
                     >
                       <CircleX size={16} />
-                      Apagar
+                      {deletingId === agendamento.agendamento_id ? 'Apagando...' : 'Apagar'}
                     </button>
                   </div>
                 </div>
@@ -280,7 +290,7 @@ export default function VisualizarPacientes() {
                           className="status-modal-content"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <p>Alterar Status do Agendamento</p>
+                          <p className="title">Alterar Status do Agendamento</p>
                           <div className="status-opcoes">
                             <button
                               onClick={() =>

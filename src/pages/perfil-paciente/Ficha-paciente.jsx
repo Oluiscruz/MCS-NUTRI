@@ -16,7 +16,7 @@ export default function FichaPaciente() {
     const [mensagem, setMensagem] = useState('');
     const [showOverlay, setShowOverlay] = useState(false);
     const [fichaExiste, setFichaExiste] = useState(false);
-
+    const [loading, setLoading] = useState(false);
 
     const { usuario } = UseAuth();
     const navigate = useNavigate();
@@ -48,6 +48,7 @@ export default function FichaPaciente() {
             return;
         }
 
+        setLoading(true);
         const dadosFicha = {
             paciente_id: usuario.id,
             altura,
@@ -69,6 +70,8 @@ export default function FichaPaciente() {
             console.error('Erro ao salvar ficha:', error);
             setMensagem('❌ Erro ao salvar ficha. Tente novamente.');
             setTimeout(() => setMensagem(''), 4000);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -147,7 +150,9 @@ export default function FichaPaciente() {
                     placeholder="Ex: emagrecer" />
 
 
-                <button type="button" className="finalizar" onClick={handleSubmit}>Salvar ficha</button>
+                <button type="button" className="finalizar" onClick={handleSubmit} disabled={loading}>
+                    {loading ? 'Salvando...' : 'Salvar ficha'}
+                </button>
             </form>
 
 

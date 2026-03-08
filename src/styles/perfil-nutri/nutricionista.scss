@@ -1,130 +1,157 @@
 :root {
     /* Paleta de Cores Moderna */
-    --primary: #4F46E5;
+    --primary: #4f46e5;
     /* Índigo principal */
-    --primary-hover: #4338CA;
-    --primary-light: #EEF2FF;
-    --success: #10B981;
+    --primary-hover: #4338ca;
+    --primary-light: #eef2ff;
+    --success: #10b981;
     /* Verde sucesso */
     --success-hover: #059669;
-    --success-light: #D1FAE5;
-    --danger: #EF4444;
+    --success-light: #d1fae5;
+    --danger: #ef4444;
     /* Vermelho erro */
-    --danger-light: #FEE2E2;
+    --danger-light: #fee2e2;
 
     --text-main: #111827;
     /* Quase preto para títulos */
-    --text-muted: #6B7280;
+    --text-muted: #6b7280;
     /* Cinza para textos secundários */
 
-    --bg-page: #F3F4F6;
+    --bg-page: #f3f4f6;
     /* Fundo da página */
-    --bg-card: #FFFFFF;
+    --bg-card: #ffffff;
     /* Fundo dos cards */
-    --border-color: #E5E7EB;
+    --border-color: #e5e7eb;
     /* Bordas sutis */
 }
-
 
 .container-perfil-nutri {
     display: flex;
     height: 100vh;
 
-.home-content {
-    margin-left: 80px;
-    padding: 25px 50px;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    transition: filter 0.3s ease;
-    filter: blur(0px);
+    .home-content {
+        margin-left: 80px;
+        padding: 25px 50px;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        transition: filter 0.3s ease;
+        filter: blur(0px);
 
-    .user {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Lexend Deca', sans-serif;
-
-    }
-
-    .bar {
-        border-radius: 25px;
-        margin-top: 30px;
-        height: 2px;
-        background: var(--nCor4);
-    }
-
-    .box-content {
-        padding: 25px 0;
-
-        .title-content {
-            margin-bottom: 30px;
-
-            h2 {
-                font-weight: 400;
-            }
+        @media (max-width: 800) {
+            width: 80%;
         }
 
-        .grupo {
+        .user {
             display: flex;
-            gap: 35px;
+            align-items: center;
+            justify-content: center;
+            font-family: "Lexend Deca", sans-serif;
+        }
 
-            .box {
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        .bar {
+            border-radius: 25px;
+            margin-top: 30px;
+            height: 2px;
+            background: var(--nCor4);
+        }
 
-                border-radius: 7px;
-                background: none;
-                box-shadow: 3px 5px 8px #18181d5e;
-                border: 1px solid var(--nCor5);
-                padding: 20px;
-                max-width: 200px;
-                cursor: pointer;
-                transition: all 0.25s ease-in-out;
+        .box-content {
+            padding: 25px 0;
 
-                li {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    list-style-type: none;
-                    font-family: 'Open Sans', sans-serif;
+            .title-content {
+                margin-bottom: 30px;
 
-                    .icon {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background: var(--primary);
-                        padding: 12px;
-                        width: 50px;
-                        height: 50px;
-                        color: var(--title2);
-                        border-radius: 50%;
-                    }
-
-                    span {
-                        margin-top: 12px;
-                        font-weight: 600;
-                    }
-
-                    p {
-                        margin-top: 7px;
-                        font-weight: 400;
-                        font-size: 0.9rem;
-
-                    }
+                h2 {
+                    font-weight: 400;
                 }
+            }
 
-                &:hover {
-                    transform: scale(1.05);
+            .grupo {
+                display: flex;
+                gap: 35px;
+
+                .box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    border-radius: 7px;
+                    background: none;
+                    box-shadow: 3px 5px 8px #18181d5e;
+                    border: 1px solid var(--nCor5);
+                    padding: 20px;
+                    max-width: 200px;
+                    cursor: pointer;
+                    transition: all 0.25s ease-in-out;
+
+                    li {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        list-style-type: none;
+                        font-family: "Open Sans", sans-serif;
+
+                        .icon {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: var(--primary);
+                            padding: 12px;
+                            width: 50px;
+                            height: 50px;
+                            color: var(--title2);
+                            border-radius: 50%;
+                        }
+
+                        span {
+                            margin-top: 12px;
+                            font-weight: 600;
+                        }
+
+                        p {
+                            margin-top: 7px;
+                            font-weight: 400;
+                            font-size: 0.9rem;
+                        }
+                    }
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
                 }
             }
         }
     }
+
+    .sidebar:not(.close)~.home-content {
+        filter: blur(4px);
+    }
 }
 
-.sidebar:not(.close) ~ .home-content {
-    filter: blur(4px);
-}
+@media (max-width: 800px) {
+    .home-content {
+        margin-left: 40px;
 
+        .user{
+            h1{
+                font-size: 1.3rem;
+            }
+        }
+
+        .title-content{
+            h2{
+                font-size: 1rem;
+            }
+        }
+
+        .box-content {
+            flex-direction: column;
+
+            .grupo{
+                flex-direction: column;
+
+            }
+        }
+    }
 }

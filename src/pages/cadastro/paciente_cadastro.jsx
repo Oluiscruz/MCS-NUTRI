@@ -13,7 +13,7 @@ export default function Paciente_cadastro() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [nascimento, setNascimento] = useState('');
-
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -24,6 +24,7 @@ export default function Paciente_cadastro() {
 
     async function handleCadastro(e) {
         e.preventDefault();
+        setLoading(true);
 
         const dadosPaciente = {
             nome,
@@ -46,6 +47,8 @@ export default function Paciente_cadastro() {
             console.error('❌ Erro de conexão com servidor:', error);
             const msgErro = error.response ? error.response.data.message : 'Erro de conexão com o servidor.';
             alert(`❌ Falha no cadastro ${msgErro}`);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -111,7 +114,9 @@ export default function Paciente_cadastro() {
                             <option value="Outro">Outro</option>
                         </select>
 
-                        <button onClick={handleCadastro}>Cadastrar</button>
+                        <button onClick={handleCadastro} disabled={loading}>
+                            {loading ? 'Cadastrando...' : 'Cadastrar'}
+                        </button>
                         <div className="ir-logar">
                             <p>Já possui uma conta? <Link to='/paciente/login'>Fazer login</Link></p>
                         </div>
