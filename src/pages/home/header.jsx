@@ -55,25 +55,116 @@ export default function Header() {
                                     Ver agendamentos
                                 </button>
                             </li>
+
+                            <button className="btn-menu" onClick={() => setOpenMenu(true)}>
+                                <TextAlignJustify size={24} color="#4f46e5" />
+                            </button>
+
+                            <div
+                                className={`overlay ${openMenu ? "show" : ""}`}
+                                onClick={() => setOpenMenu(false)}
+                            />
+
+                            <div className={`side-menu ${openMenu ? "open" : ""}`}>
+                                <button
+                                    className="close-btn"
+                                    onClick={() => setOpenMenu(false)}
+                                >
+                                    <X size={24} />
+                                </button>
+
+                                <nav>
+                                    <li>
+                                        <p>Bem vinda, {usuario.nome}</p>
+                                    </li>
+
+                                    <button
+                                        className="account"
+                                        onClick={() => {
+                                            Entrar();
+                                            setOpenMenu(false);
+                                        }}
+                                    >
+                                        Marcar Consulta
+                                    </button>
+                                </nav>
+                            </div>
                         </>
                     ) : usuario.tipo === "paciente" ? (
-                        <>
-                            <li>
-                                <a href="https://wa.me/5581999154208?text=🧑🏽💻 Olá dra Manuela!, gostaria de mais informações sobre sua consulta">
-                                    Contato
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onClick={soon}>
-                                    Sobre
-                                </a>
-                            </li>
-                            <li>
-                                <button className="account" onClick={Agendamento}>
-                                    Agendar Consultas
+                        <div className="links">
+                            <nav className="links-header">
+                                <li>
+                                    <a href="#" onClick={scrollToServices}>
+                                        Serviços
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://wa.me/5581999154208?text=🧑🏽💻 Olá dra Manuela!, gostaria de mais informações sobre sua consulta">
+                                        Contato
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" onClick={soon}>
+                                        Sobre
+                                    </a>
+                                </li>
+                                <li>
+                                    <button className="account" onClick={Entrar}>
+                                        Marcar Consulta
+                                    </button>
+                                </li>
+                            </nav>
+
+                            <button className="btn-menu" onClick={() => setOpenMenu(true)}>
+                                <TextAlignJustify size={24} color="#4f46e5" />
+                            </button>
+
+                            <div
+                                className={`overlay ${openMenu ? "show" : ""}`}
+                                onClick={() => setOpenMenu(false)}
+                            />
+
+                            <div className={`side-menu ${openMenu ? "open" : ""}`}>
+                                <button
+                                    className="close-btn"
+                                    onClick={() => setOpenMenu(false)}
+                                >
+                                    <X size={24} />
                                 </button>
-                            </li>
-                        </>
+                                <nav>
+                                    <a
+                                        href="#"
+                                        onClick={() => {
+                                            scrollToServices();
+                                            setOpenMenu(false);
+                                        }}
+                                    >
+                                        Serviços
+                                    </a>
+                                    <a href="https://wa.me/5581999154208?text=🧑🏽💻 Olá dra Manuela!, gostaria de mais informações sobre sua consulta">
+                                        Contato
+                                    </a>
+                                    <a
+                                        href="#"
+                                        onClick={() => {
+                                            soon();
+                                            setOpenMenu(false);
+                                        }}
+                                    >
+                                        Sobre
+                                    </a>
+                                    <button
+                                        className="account"
+                                        onClick={() => {
+                                            Entrar();
+                                            setOpenMenu(false);
+                                        }}
+                                    >
+                                        Marcar Consulta
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             <li>
@@ -110,26 +201,47 @@ export default function Header() {
                     </nav>
 
                     <button className="btn-menu" onClick={() => setOpenMenu(true)}>
-                        <TextAlignJustify size={24} color="#4f46e5"/>
+                        <TextAlignJustify size={24} color="#4f46e5" />
                     </button>
 
-                    <div className={`overlay ${openMenu ? "show" : ""}`} onClick={() => setOpenMenu(false)} />
+                    <div
+                        className={`overlay ${openMenu ? "show" : ""}`}
+                        onClick={() => setOpenMenu(false)}
+                    />
 
                     <div className={`side-menu ${openMenu ? "open" : ""}`}>
                         <button className="close-btn" onClick={() => setOpenMenu(false)}>
                             <X size={24} />
                         </button>
                         <nav>
-                            <a href="#" onClick={() => { scrollToServices(); setOpenMenu(false); }}>
+                            <a
+                                href="#"
+                                onClick={() => {
+                                    scrollToServices();
+                                    setOpenMenu(false);
+                                }}
+                            >
                                 Serviços
                             </a>
                             <a href="https://wa.me/5581999154208?text=🧑🏽💻 Olá dra Manuela!, gostaria de mais informações sobre sua consulta">
                                 Contato
                             </a>
-                            <a href="#" onClick={() => { soon(); setOpenMenu(false); }}>
+                            <a
+                                href="#"
+                                onClick={() => {
+                                    soon();
+                                    setOpenMenu(false);
+                                }}
+                            >
                                 Sobre
                             </a>
-                            <button className="account" onClick={() => { Entrar(); setOpenMenu(false); }}>
+                            <button
+                                className="account"
+                                onClick={() => {
+                                    Entrar();
+                                    setOpenMenu(false);
+                                }}
+                            >
                                 Marcar Consulta
                             </button>
                         </nav>
