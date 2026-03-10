@@ -155,7 +155,7 @@ export default function Header() {
                                     <button
                                         className="account"
                                         onClick={() => {
-                                            Entrar();
+                                            Agendamento();
                                             setOpenMenu(false);
                                         }}
                                     >
