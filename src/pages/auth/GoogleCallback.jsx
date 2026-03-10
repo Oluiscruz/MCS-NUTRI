@@ -37,7 +37,16 @@ export default function GoogleCallback() {
                 }
 
                 // Mantém o spinner visível por um breve instante antes de redirecionar
-                setTimeout(() => safeNavigate(target), 700);
+                setTimeout(() => {
+                    // Navegação completa com recarregamento para garantir o estado atualizado
+                    try {
+                        window.location.replace(target);
+                    } catch (e) {
+                        // Fallback para SPA navigation se replace falhar
+                        safeNavigate(target);
+                    }
+                }, 700);
+                
             } catch (err) {
                 console.error('Erro ao processar dados do usuário:', err);
                 setError('Erro ao processar login. Tente novamente.');
