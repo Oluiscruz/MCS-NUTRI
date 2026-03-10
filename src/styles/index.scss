@@ -1,13 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Forum&family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400..700;1,400..700&family=Forum&family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap");
 
 :root {
-  font-family: 'Open Sans', sans-serif;
-  --color1: #655ab1;
-  --color2: #2c2958;
-  --color3: #ffdef4;
-  --color4: #b196fa;
-  --title1: #000000;
-  --title2: #fff;
+  font-family: "Open Sans", sans-serif;
+  /* Paleta de Cores Moderna */
+  --primary: #4f46e5;
+  /* Índigo principal */
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
+  --success: #10b981;
+  /* Verde sucesso */
+  --success-hover: #059669;
+  --success-light: #d1fae5;
+  --danger: #ef4444;
+  /* Vermelho erro */
+  --danger-light: #fee2e2;
+
+  --info: #3b82f6;
+  --text-main: #111827;
+  /* Quase preto para títulos */
+  --text-muted: #6b7280;
+  /* Cinza para textos secundários */
+
+  --bg-page: #f3f4f6;
+  /* Fundo da página */
+  --bg-card: #ffffff;
+  /* Fundo dos cards */
+  --border-color: #e5e7eb;
+  /* Bordas sutis */
 
   color-scheme: light dark;
   background-color: #ffffe1;
@@ -17,13 +36,82 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+.container {
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(4px); /* Efeito de vidro */
+
+    animation: fadeIn 0.35s ease;
+    z-index: 1000;
+
+    .modal-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      padding: 3rem 2rem;
+      max-width: 450px;
+      width: 90%;
+
+      background: var(--bg-card);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.347);
+
+      animation: scaleIn 0.35s ease;
+      gap: 1rem;
+
+      .modal-msg{
+        p{
+          margin-top: 6px;
+        }
+      }
+
+      .btn-fechar {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+
+        button {
+          border: 1px solid var(--border-color);
+          color: var(--text-main);
+          border-radius: 100%;
+          padding: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+
+          &:hover {
+            background-color: var(--bg-page);
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .modal-btn {
+        button {
+          background: var(--info);
+        }
+      }
+    }
+  }
+}
 a {
   font-weight: 700;
   color: var(--color3);
@@ -53,7 +141,7 @@ button:focus-visible {
 }
 
 select {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   padding: 10px 15px;
   border-radius: 10px;
   background-color: transparent;
@@ -62,7 +150,7 @@ select {
   font-size: 15px;
 
   option {
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     background-color: #020202;
     border-radius: 10px;
     color: #fff;
@@ -81,5 +169,26 @@ select {
         background-color: #f9f9f9;
       }
     }
+  }
+}
+
+// KeyFrames reutilizáveis
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }

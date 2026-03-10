@@ -1,31 +1,58 @@
-import '../../styles/home/main.scss';
+import "../../styles/home/main.scss";
 import ChatFixo from "./chat_fixo";
-import ManuelaBanner from '../../assets/images/Manuela.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { FaInstagram } from "react-icons/fa";
 
 export default function Main() {
-
-const navigate = useNavigate();
+    const navigate = useNavigate();
     const Agendamento = () => {
-        navigate('paciente/perfil');
-    }
-    
+        navigate("/entrar");
+    };
+
     return (
         <main className="banner-home">
             <div className="content-banner">
-                <h1>CRN-6: 40516</h1>
-                <h2>Nutricionista</h2>
-                <h3>Manuela Cristina Santos</h3>
-                <p>Emagrecimento, Musculação,
-                    Bem-estar, Saúde e Qualidade de Vida</p>
-                <button className='get-started' onClick={Agendamento}>Agendar Consulta</button>
-            </div>
+                    <div className="frase">
+                        <h1>Inicie uma vida saudável hoje!</h1>
+                    </div>
+                <div className="title">
+                    <h1 className="nome">Sou Manuela,</h1>
+                    <h1>Sua Nutricionista Pessoal</h1>
+                    <p>
+                        Especialista em nutrição comportamental. Transforme sua vida por
+                        meio de uma alimentação consciente e saudável.
+                    </p>
+                    <button className="get-started" onClick={Agendamento}>
+                        Agendar Consulta
+                    </button>
 
-            <div className="image-banner">
-                <img src={ManuelaBanner} alt="Manuela Cristina Santos" />
+                    <div className="follow">
+                        <span>Me siga</span> <div className="bar"></div>
+                        <div className="icons">
+                            <a href="#">
+                                <FaInstagram size={25} />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="cards-banner">
+                    <div className="card">
+                        <span>6+</span>
+                        <p>Experiência</p>
+                    </div>
+                    <div className="card">
+                        <span>1000+</span>
+                        <p>Consultas realizadas</p>
+                    </div>
+                    <div className="card">
+                        <span>100+</span>
+                        <p>Dietas personalizadas</p>
+                    </div>
+                </div>
             </div>
 
             <ChatFixo />
         </main>
-    )
+    );
 }

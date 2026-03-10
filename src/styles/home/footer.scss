@@ -9,6 +9,15 @@
     color: #ccc;
     font-family: 'Open Sans', sans-serif;
 
+    @media (max-width: 768px) {
+        padding: 20px 15px;
+        gap: 15px;
+    }
+
+    @media (max-width: 480px) {
+        padding: 15px 10px;
+    }
+
     .info-footer {
         display: flex;
         justify-content: center;
@@ -17,6 +26,11 @@
         gap: 10px;
         margin: 12px;
         font-size: 13px;
+
+        @media (max-width: 480px) {
+            font-size: 11px;
+            margin: 8px;
+        }
 
         p {
             color: var(--title2);
