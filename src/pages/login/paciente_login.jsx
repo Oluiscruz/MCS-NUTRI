@@ -72,7 +72,7 @@ export default function Paciente_login() {
                 </div>
                 <div className="box-login">
                     <div className="banner-login">
-                        <i><User size={55} /></i>
+                        <i><User size={45} /></i>
                         <h1>Faça login em sua conta</h1>
                     </div>
                     <form onSubmit={handleLogin}>

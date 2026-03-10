@@ -11,22 +11,22 @@ export default function Acessar() {
     }
 
     return (
-        <div className='connection'>
-
-            <div className="container-connection">
-                <div className="box-left">
+        <div className="container-connection">
+            <div className="content">
+                <div className="header">
                     <div className="sair">
                         <button onClick={inicio}><i><ArrowLeft size={25} /></i></button>
                     </div>
-                    <i><HeartPlus size={64} /></i>
                     <div className="title">
+                    <i><HeartPlus size={34} /></i>
                         <h1 >NutriMs</h1>
-                        <p>Nutricionista Comportamental</p>
                     </div>
                 </div>
-                
-                <div className="box-right">
+
+                <div className="content-acess">
+                    <div className="title">
                     <h2>Como deseja acessar?</h2>
+                    </div>
                     <div className="cards">
 
                         <Link to='/paciente/login'>
@@ -62,8 +62,8 @@ export default function Acessar() {
                                 </div>
                             </button></Link>
                     </div>
-
                 </div>
+
             </div>
         </div>
     )

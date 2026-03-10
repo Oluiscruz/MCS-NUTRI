@@ -2,6 +2,10 @@
     border-radius: 25px;
     padding: 15px;
 
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
+
     .voltar-home {
         display: flex;
 
@@ -14,13 +18,18 @@
             transition: all 0.3s;
 
             p {
-                font-size: 16px;
-            }
+                    font-size: 16px;
 
-            &:hover {
-                color: #20d945;
-                transform: scale(1.105);
-            }
+                    @media (max-width: 768px) {
+                        display: none;
+                    }
+                }
+
+                &:hover {
+                    color: var(--bg-card);
+                    background: var(--primary);
+                    transform: scale(1.105);
+                }
         }
     }
 
@@ -45,10 +54,18 @@
             h1 {
                 font-family: 'Sofia Sans', sans-serif;
                 font-size: 2.2rem;
+
+                @media (max-width: 768px) {
+                    font-size: 1.2rem;
+                }
             }
 
             p {
                 font-size: 18px;
+                
+                @media (max-width: 768px) {
+                    font-size: 14px;
+                }
             }
         }
 
@@ -83,6 +100,10 @@
                     border-color: #20d945;
                     box-shadow: 0 0 0 4px rgba(44, 229, 84, 0.06);
                 }
+
+                @media (max-width: 768px) {
+                        font-size: 1rem;
+                    }
             }
         }
 

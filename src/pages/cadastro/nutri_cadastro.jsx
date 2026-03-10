@@ -66,8 +66,6 @@ export default function Nutricionista_cadastro() {
     }
 
     return (
-        <div className='cadastro'>
-
             <div className="container-cadastro-med">
 
                 <div className="box-title-med">
@@ -150,6 +148,5 @@ export default function Nutricionista_cadastro() {
                 </div>
 
             </div >
-        </div>
     )
 }

@@ -1,37 +1,51 @@
-:root{
-    --pc-color-1:#206ad9;
+:root {
+    --pc-color-1: #206ad9;
     --span-color: #a01616;
 }
+
 .login {
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--bg-card);
 
     .container-login {
         border: 1px solid blue;
         width: 600px;
 
+        @media (max-width: 768px) {
+            border: none;
+        }
+
         .voltar {
             display: flex;
+            
 
             button {
+                padding: 12px;
                 display: flex;
                 justify-content: center;
                 border-radius: 25px;
                 gap: 5px;
-                color: #18181d80;
+                color: var(--text-main);
                 transition: all 0.3s;
 
                 p {
                     font-size: 16px;
+
+                    @media (max-width: 768px) {
+                        display: none;
+                    }
                 }
 
                 &:hover {
-                    color: var(--pc-color-1);
+                    color: var(--bg-card);
+                    background: var(--primary);
                     transform: scale(1.105);
                 }
+
+
             }
         }
 
@@ -51,11 +65,19 @@
 
                 i {
                     color: var(--pc-color-1);
+
+                    @media (max-width: 768px) {
+                        font-size: 1rem;
+                    }
                 }
 
                 h1 {
                     font-family: 'Sofia Sans', sans-serif;
                     font-size: 1.6rem;
+
+                    @media (max-width: 768px) {
+                        font-size: 1.2rem;
+                    }
                 }
 
                 p {
@@ -84,7 +106,7 @@
                 input {
                     padding: 10px 15px;
                     border-radius: 10px;
-                    background-color: #e2e2e2;
+                    background-color: transparent;
                     border: 1px solid #ccc;
                     font-family: 'Open sans', sans-serif;
                     color: #18181d;
@@ -95,6 +117,10 @@
                         outline: none;
                         border-color: var(--pc-color-1);
                         box-shadow: 0 0 0 4px rgba(44, 140, 229, 0.06);
+                    }
+
+                    @media (max-width: 768px) {
+                        font-size: 1rem;
                     }
                 }
 

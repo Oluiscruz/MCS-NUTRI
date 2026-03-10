@@ -28,15 +28,15 @@ export default function Nutricionista_login() {
 
         try {
             const response = await axios.post('/api/nutricionista/login', dadosNutri);
-            
+
             if (!response || !response.data) {
                 throw new Error('Resposta inválida do servidor');
             }
-            
+
             alert(`${response.data.message}`);
 
             const usuarioRetornado = response.data.usuario || response.data.user;
-            
+
             if (!usuarioRetornado || !usuarioRetornado.id) {
                 throw new Error('Dados do usuário inválidos');
             }
@@ -60,40 +60,40 @@ export default function Nutricionista_login() {
 
     return (
         <div className='login'>
-            
-        <div className="container-login">
-            <div className="voltar-home">
-                <button onClick={voltarInicio}>
-                    <i><ChevronLeft size={23} /></i><p>Voltar</p>
-                </button>
-            </div>
-            <div className="box-medico-login">
-                <div className="banner-login">
-                    <i><Stethoscope size={55} /></i>
-                    <h1>Bem vindo(a) de volta</h1>
-                    <p>Acesso para nutricionistas</p>
-                </div>
-                <form>
-                    <label><span>*</span>Email</label>
-                    <input type="email"
-                        placeholder='exemplo@email.com'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)} />
 
-                    <label><span>*</span>Senha</label>
-                    <input type="password"
-                        placeholder='******'
-                        value={senha}
-                        onChange={(e) => setSenha(e.target.value)} />
-                </form>
-                <button onClick={handleLogin} disabled={loading}>
-            {loading ? 'Entrando...' : 'Entrar'}
-        </button>
-                <div className="ir-cadastrar">
-                    <p>Não tem uma conta? <Link to='/nutricionista/cadastro'>Cadastre-se</Link></p>
+            <div className="container-login">
+                <div className="voltar-home">
+                    <button onClick={voltarInicio}>
+                        <i><ChevronLeft size={23} /></i><p>Voltar</p>
+                    </button>
+                </div>
+                <div className="box-medico-login">
+                    <div className="banner-login">
+                        <i><Stethoscope size={45} /></i>
+                        <h1>Bem vindo(a) de volta</h1>
+                        <p>Acesso para nutricionistas</p>
+                    </div>
+                    <form>
+                        <label><span>*</span>Email</label>
+                        <input type="email"
+                            placeholder='exemplo@email.com'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)} />
+
+                        <label><span>*</span>Senha</label>
+                        <input type="password"
+                            placeholder='******'
+                            value={senha}
+                            onChange={(e) => setSenha(e.target.value)} />
+                    </form>
+                    <button onClick={handleLogin} disabled={loading}>
+                        {loading ? 'Entrando...' : 'Entrar'}
+                    </button>
+                    <div className="ir-cadastrar">
+                        <p>Não tem uma conta? <Link to='/nutricionista/cadastro'>Cadastre-se</Link></p>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
 
     )
