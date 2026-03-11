@@ -17,6 +17,7 @@ import CRNValidacao from './pages/cadastro/verificacao/crn_validacao.jsx';
 import VisualizarPacientes from './pages/perfil-nutri/visualizar-pacientes/vizualizar-pacientes.jsx';
 import HistoricoConsultas from './pages/perfil-nutri/visualizar-pacientes/historico.jsx';
 import FichaPaciente from './pages/perfil-paciente/Ficha-paciente.jsx';
+
 import './styles/index.scss'
 
 // Configuração do Axios
@@ -42,6 +43,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/cadastro/crn-validacao" element={<CRNValidacao />} />
           <Route path="/nutricionista/visualizar-pacientes" element={<VisualizarPacientes />} />
           <Route path="/nutricionista/historico-consultas" element={<HistoricoConsultas />} />
+
         </Routes>
       </BrowserRouter>
     </ AuthProvider >

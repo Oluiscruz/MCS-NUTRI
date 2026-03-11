@@ -99,12 +99,12 @@
 
 /* 7. Final de Semana e Meses Vizinhos */
 .react-calendar__month-view__days__day--weekend {
-  color: #ef4444; /* Um vermelho mais suave e moderno */
+  color: #5e44ef; /* Um vermelho mais suave e moderno */
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #9ca3af !important;
-  opacity: 0.5;
+  color: #148d10 !important;
+  opacity: 1;
 }
 
 /* 8. Ajustes de Responsividade Interna */

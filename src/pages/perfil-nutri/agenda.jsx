@@ -31,6 +31,79 @@ export default function AgendaCustom() {
     const { usuario } = UseAuth();
     const navigate = useNavigate();
 
+    const diasSemana = [
+        { id: 0, nome: 'Domingo' },
+        { id: 1, nome: 'Segunda-feira' },
+        { id: 2, nome: 'Terça-feira' },
+        { id: 3, nome: 'Quarta-feira' },
+        { id: 4, nome: 'Quinta-feira' },
+        { id: 5, nome: 'Sexta-feira' },
+        { id: 6, nome: 'Sábado' }
+    ];
+
+    const [horariosFixos, setHorariosFixos] = useState([]);
+    const [loadingFixos, setLoadingFixos] = useState(false);
+    const [mensagemFixos, setMensagemFixos] = useState('');
+
+    useEffect(() => {
+        carregarHorariosFixos();
+    }, []);
+
+    const carregarHorariosFixos = async () => {
+        try {
+            const response = await axios.get(
+                `/api/nutricionista/horario-fixo/listar?nutricionista_id=${usuario.id}`
+            );
+            setHorariosFixos(response.data.horarios || []);
+        } catch (error) {
+            console.error('Erro ao carregar horários:', error);
+        }
+    };
+
+    const adicionarHorarioFixo = () => {
+        setHorariosFixos([...horariosFixos, {
+            dia_semana: 1,
+            hora_inicio: '09:00',
+            hora_fim: '18:00',
+            intervalo_consulta: 60
+        }]);
+    };
+
+    const removerHorarioFixo = (index) => {
+        setHorariosFixos(horariosFixos.filter((_, i) => i !== index));
+    };
+
+    const atualizarHorarioFixo = (index, campo, valor) => {
+        const novos = [...horariosFixos];
+        novos[index][campo] = valor;
+        setHorariosFixos(novos);
+    };
+
+    const salvarHorariosFixos = async () => {
+        setLoadingFixos(true);
+        setMensagemFixos('');
+
+        try {
+            const response = await axios.post(
+                '/api/nutricionista/horario-fixo/salvar',
+                {
+                    nutricionista_id: usuario.id,
+                    horarios: horariosFixos
+                }
+            );
+            setTimeout(() => setMensagemFixos('Horários fixos salvos com sucesso!'), 3000
+        )
+            carregarHorariosFixos();
+        } catch (error) {
+            console.error('Erro ao salvar:', error);
+            setMensagemFixos('Erro ao salvar horários fixos');
+        } finally {
+            setLoadingFixos(false);
+        }
+    };
+
+
+
     const handleData = (date) => {
         setData(date);
         setShowOverlay(true);
@@ -82,6 +155,7 @@ export default function AgendaCustom() {
             "Novembro",
             "Dezembro",
         ];
+
         const dadosData = {
             nutricionista_id: usuario.id,
             mes: meses[data.getMonth()],
@@ -134,7 +208,7 @@ export default function AgendaCustom() {
 
             <div className="aviso">
                 <em>arraste para o lado para acessar a agenda</em>
-                
+
             </div>
             <main className="content-grid">
                 {/* Slider */}
@@ -200,6 +274,88 @@ export default function AgendaCustom() {
                                 />
                             </div>
                         </section>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <aside className="settings-card">
+                            <div className="card-header">
+                                <div className="gap">
+                                    <Clock size={40} />
+                                    <h3>Horários Fixos de Atendimento</h3>
+
+                                </div>
+                                <p className="header-text">
+                                    Defina os dias e horários fixos em que você atende.
+                                </p>
+                            </div>
+
+                            {mensagemFixos && (
+                                <div className={mensagemFixos.includes('sucesso') ? 'confirm-tempo-atendimento' : 'error-tempo-atendimento'}>
+                                    {mensagemFixos}
+                                </div>
+                            )}
+
+                            <div className="horarios-fixos-lista">
+                                {horariosFixos.map((horario, index) => (
+                                    <div key={index} className="horario-fixo-item">
+
+                                        <select
+                                            value={horario.dia_semana}
+                                            onChange={(e) => atualizarHorarioFixo(index, 'dia_semana', parseInt(e.target.value))}
+                                        >
+                                            {diasSemana.map(dia => (
+                                                <option key={dia.id} value={dia.id}>{dia.nome}</option>
+                                            ))}
+                                        </select>
+
+                                        <div className="separa-inputs">
+                                            <input
+                                                type="time"
+                                                value={horario.hora_inicio}
+                                                onChange={(e) => atualizarHorarioFixo(index, 'hora_inicio', e.target.value)}
+                                            />
+
+                                            <span>até</span>
+
+                                            <input
+                                                type="time"
+                                                value={horario.hora_fim}
+                                                onChange={(e) => atualizarHorarioFixo(index, 'hora_fim', e.target.value)}
+                                            />
+
+                                            <select
+                                                value={horario.intervalo_consulta}
+                                                onChange={(e) => atualizarHorarioFixo(index, 'intervalo_consulta', parseInt(e.target.value))}
+                                            >
+                                                <option value={30}>30 min</option>
+                                                <option value={60}>60 min</option>
+                                                <option value={90}>90 min</option>
+                                            </select>
+
+                                            <button
+                                                className="btn-remover"
+                                                onClick={() => removerHorarioFixo(index)}
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="acoes-fixos">
+                                <button className="btn-save-sm" onClick={adicionarHorarioFixo}>
+                                    + Adicionar Horário
+                                </button>
+                                <button
+                                    className="btn-save-sm"
+                                    onClick={salvarHorariosFixos}
+                                    disabled={loadingFixos || horariosFixos.length === 0}
+                                >
+                                    {loadingFixos ? 'Salvando...' : 'Salvar Horários'}
+                                </button>
+                            </div>
+                        </aside>
                     </SwiperSlide>
                 </Swiper>
             </main>

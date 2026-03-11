@@ -19,6 +19,7 @@ export default function AgendarConsulta() {
     const [erro, setErro] = useState('');
     const [loading, setLoading] = useState(false);
     const [loadingAgenda, setLoadingAgenda] = useState(false);
+    const [horariosFixos, setHorariosFixos] = useState([]);
 
     const { usuario, logout } = UseAuth();
     const navigate = useNavigate();
@@ -39,7 +40,8 @@ export default function AgendarConsulta() {
         setErro('');
         if (!nutriSelecionado) {
             setDiasDisponiveis([]);
-            setHorariosOcupados([])
+            setHorariosOcupados([]);
+            setHorariosFixos([]);
             return;
         }
 
@@ -54,13 +56,16 @@ export default function AgendarConsulta() {
                     params: { nutricionista_id: nutriSelecionado }
                 });
 
-                console.log('Dias disponíveis recebidos:', responseDias.data.dias);
-                console.log('Horários ocupados recebidos:', responseOcupados.data.ocupados);
+                const responseFixos = await axios.get('/api/nutricionista/horario-fixo/listar', {
+                    params: { nutricionista_id: nutriSelecionado }
+                })
 
                 setDiasDisponiveis(responseDias.data.dias || []);
                 setHorariosOcupados(responseOcupados.data.ocupados || []);
+                setHorariosFixos(responseFixos.data.horarios || []);
 
-                if (!responseDias.data.dias || responseDias.data.dias.length === 0) {
+                if ((!responseDias.data.dias || responseDias.data.dias.length === 0) &&
+                    (!responseFixos.data.horarios || responseFixos.data.horarios.length === 0)) {
                     setErro('Este nutricionista ainda não disponibilizou horários na agenda.');
                 }
 
@@ -103,64 +108,61 @@ export default function AgendarConsulta() {
         setDataSelecionada(date);
         setHorarioEscolhido(null);
 
+        const diaSemana = date.getDay();
+        const diaNum = date.getDate();
         const meses = [
             'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
             'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
         ];
 
-        const diaNum = date.getDate();
         const mesNome = meses[date.getMonth()];
         const anoNum = date.getFullYear();
 
-        const diaConfig = diasDisponiveis.find(d =>
-            d.dia === diaNum &&
-            d.mes === mesNome &&
-            d.ano === anoNum
-        );
+        // 1. Prioriza data manual (se houver), senão usa a fixa
+        const configManual = diasDisponiveis.find(d => d.dia === diaNum && d.mes === mesNome && d.ano === anoNum);
+        const configFixa = horariosFixos.find(h => h.dia_semana === diaSemana);
 
-        if (diaConfig) {
-            // 1. Gera todos os horários que o profissional atende
-            const listaCompleta = gerarHorarios(diaConfig.hora_inicio, diaConfig.hora_fim, diaConfig.tempo_atendimento);
+        let slotsBrutos = [];
 
-            // 2. Filtra os horários já agendados por outros
-            // O backend retorna dia, mes (nome), ano e hora_agendamento (formato "HH:MM").
-            // Comparar por dia/mes/ano e extrair os primeiros 5 chars de hora_agendamento.
-            const ocupadosDoDia = (horariosOcupados || [])
-                .filter(h => h.dia === diaNum && h.mes === mesNome && h.ano === anoNum)
-                .map(h => (h.hora_agendamento || '').substring(0, 5));
-
-            // 3. Remove da lista os horários ocupados
-            const listaFiltrada = listaCompleta.filter(horario => !ocupadosDoDia.includes(horario));
-
-            setHorariosGerados(listaFiltrada);
-
-        } else {
-            setHorariosGerados([]);
+        if (configManual) {
+            slotsBrutos = gerarHorarios(configManual.hora_inicio, configManual.hora_fim, configManual.tempo_atendimento);
+        } else if (configFixa) {
+            // Converte o intervalo fixo (ex: 60) para o formato string esperado pela função gerarHorarios
+            const intervaloStr = minutosParaHoras(configFixa.intervalo_consulta);
+            slotsBrutos = gerarHorarios(configFixa.hora_inicio, configFixa.hora_fim, intervaloStr);
         }
+
+        // 2. Filtrar ocupados (Mantém sua lógica original)
+        const ocupadosDoDia = (horariosOcupados || [])
+            .filter(h => h.dia === diaNum && h.mes === mesNome && h.ano === anoNum)
+            .map(h => (h.hora_agendamento || '').substring(0, 5));
+
+        const listaFinal = slotsBrutos.filter(h => !ocupadosDoDia.includes(h));
+        setHorariosGerados(listaFinal);
+
     };
 
     const diasIndisponiveis = ({ date, view }) => {
         if (view === 'month') {
-            if (!diasDisponiveis || diasDisponiveis.length === 0) return true;
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            if (date < hoje) return true; // Bloqueia passado
 
-            const meses = [
-                'Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho',
-                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-            ];
-
+            const diaSemana = date.getDay(); // 0 (Dom) a 6 (Sab)
             const diaNum = date.getDate();
+            const meses = ['Janeiro', 'Fevereiro', 'Marco', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
             const mesNome = meses[date.getMonth()];
             const anoNum = date.getFullYear();
 
-            const taDisponivel = diasDisponiveis.some(d => {
-                const match = d.dia === diaNum && d.mes === mesNome && d.ano === anoNum;
-                if (match) {
-                    console.log(`Dia disponível encontrado: ${diaNum}/${mesNome}/${anoNum}`);
-                }
-                return match;
-            });
-            
-            return !taDisponivel;
+            // Verifica se tem horário fixo para este dia da semana
+            const temFixo = horariosFixos.some(h => h.dia_semana === diaSemana);
+
+            // Verifica se tem data manual (específica)
+            const temManual = diasDisponiveis.some(d =>
+                d.dia === diaNum && d.mes === mesNome && d.ano === anoNum
+            );
+
+            return !(temFixo || temManual);
         }
         return false;
     };

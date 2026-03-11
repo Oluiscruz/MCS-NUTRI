@@ -12,9 +12,6 @@ export default function Nutricionista_perfil() {
     const handleAgenda = () => { navigate('/nutricionista/agenda') }
     const handlePacientes = () => { navigate('/nutricionista/visualizar-pacientes') }
 
-
-
-
     return (
         <div className="container-perfil-nutri">
             <Sidebar />

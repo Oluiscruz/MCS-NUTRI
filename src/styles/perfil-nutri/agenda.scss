@@ -79,7 +79,7 @@
                 border-radius: 4px;
                 color: var(--bg-card);
 
-                p{
+                p {
                     color: var(--bg-card);
                     font-size: 0.95rem;
                 }
@@ -87,9 +87,9 @@
         }
     }
 
-    .aviso{
+    .aviso {
         max-width: 320px;
-        margin: 0 auto ;
+        margin: 0 auto;
         padding: 2rem 0 0;
     }
 
@@ -151,7 +151,7 @@
         transition: all 0.25s ease;
 
         &:hover {
-        box-shadow: 0 12px 24px #4438ca32;
+            box-shadow: 0 12px 24px #4438ca32;
 
         }
     }
@@ -161,24 +161,31 @@
 
         .card-header {
             display: flex;
+            flex-direction: column;
             align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 7px;
             gap: 12px;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--bg-body);
+            border-bottom: 2px solid var(--border-color);
             color: var(--primary);
 
-            svg {
-                background: var(--accent);
+            .gap{
+                display: flex;
+            align-items: center;
+            gap: 12px;
+
+                svg {
                 padding: 8px;
                 border-radius: 10px;
-            }
 
-            h3 {
-                margin: 0;
-                font-size: 1.2rem;
-                font-weight: 700;
+                h3 {
+                    margin: 0;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                }
             }
+            
+        }
         }
 
         .setting-item {
@@ -207,10 +214,11 @@
                     background: var(--bg-body);
                     color: var(--text-main);
                     flex: 1;
-                    padding: 12px 14px;
-                    border: 2px solid #e5e7eb;
+                    padding: 10px 8px;
+                    border: 1px solid var(--border-color);
+            color: var(--text-main);
                     border-radius: 10px;
-                    font-size: 1rem;
+                    font-size: 0.8rem;
                     transition: border-color 0.2s;
 
                     &:focus {
@@ -263,6 +271,83 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+    }
+
+    .horarios-fixos-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+
+
+        .horario-fixo-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+                border-radius: 8px;
+
+            select,
+            input[type="time"] {
+                padding: 8px;
+                border-radius: 8px;
+                border: 1px solid var(--border-color);
+                background: #fff;
+                font-size: 0.95rem;
+                color: var(--text-main);
+            }
+
+            .separa-inputs{
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 12px;
+            }
+
+            .horario-ate {
+                color: var(--text-muted);
+                font-weight: 600;
+                margin: 0 4px;
+            }
+
+            .btn-remover {
+                margin-left: auto;
+                background: transparent;
+                border: none;
+                color: var(--danger);
+                cursor: pointer;
+                padding: 6px;
+                border-radius: 6px;
+
+                &:hover {
+                    background: rgba(239, 68, 68, 0.08);
+                }
+            }
+        }
+
+    
+    }
+
+    .acoes-fixos {
+        display: flex;
+        gap: 1rem;
+
+        button {
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            outline: none;
+            background: var(--primary);
+
+            cursor: pointer;
+            transition: all 0.25s ease-in;
+        }
+
+        .btn-save-sm {
+            width: 90%;
+        }
     }
 
     // Customização do Calendário
@@ -467,7 +552,7 @@
 
 @media (max-width: 860px) {
     .container-agenda {
-        
+
         .main-header {
             padding: 10px;
             display: flex;
@@ -476,27 +561,28 @@
             justify-content: space-evenly;
             border-bottom-left-radius: 60px;
             border-bottom-right-radius: 60px;
-            
-            .btn-back{
+
+            .btn-back {
                 font-size: 12px;
                 padding: 6px;
             }
+
             .brand-title {
 
-                h1{
+                h1 {
                     font-size: 1rem;
 
                 }
-                
-                .infos{
+
+                .infos {
                     display: none !important;
                 }
             }
         }
-        
-        .content-grid{
-            padding: 10px;   
-            
+
+        .content-grid {
+            padding: 10px;
+
             .settings-card,
             .calendar-card {
                 padding: 1.5rem;
