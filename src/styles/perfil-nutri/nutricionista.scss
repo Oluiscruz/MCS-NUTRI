@@ -53,7 +53,7 @@
             border-radius: 25px;
             margin-top: 30px;
             height: 2px;
-            background: var(--nCor4);
+            background: var(--border-color);
         }
 
         .box-content {
@@ -79,7 +79,7 @@
                     border-radius: 7px;
                     background: none;
                     box-shadow: 3px 5px 8px #18181d5e;
-                    border: 1px solid var(--nCor5);
+                    border: 1px solid var(--primary);
                     padding: 20px;
                     max-width: 200px;
                     cursor: pointer;
@@ -100,7 +100,7 @@
                             padding: 12px;
                             width: 50px;
                             height: 50px;
-                            color: var(--title2);
+                            color: var(--bg-card);
                             border-radius: 50%;
                         }
 
@@ -118,6 +118,7 @@
 
                     &:hover {
                         transform: scale(1.05);
+                        
                     }
                 }
             }

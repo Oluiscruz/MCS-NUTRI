@@ -45,7 +45,10 @@ export default function Header() {
             {usuario ? (
                 <nav className="links-header">
                     {usuario.tipo === "nutricionista" ? (
-                        <>
+                        <div className="links">
+                            <nav className="links-header">
+
+
                             <li>
                                 <p>Bem vinda, {usuario.nome}</p>
                             </li>
@@ -55,6 +58,7 @@ export default function Header() {
                                     Ver agendamentos
                                 </button>
                             </li>
+                            </nav>
 
                             <button className="btn-menu" onClick={() => setOpenMenu(true)}>
                                 <TextAlignJustify size={24} color="#4f46e5" />
@@ -89,7 +93,7 @@ export default function Header() {
                                     </button>
                                 </nav>
                             </div>
-                        </>
+                            </div>
                     ) : usuario.tipo === "paciente" ? (
                         <div className="links">
                             <nav className="links-header">

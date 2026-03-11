@@ -3,6 +3,7 @@ import axios from 'axios';
 import { User, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import '../../styles/cadastro/paciente.scss';
+import { UseAuth } from '../../context/context';
 
 
 export default function Paciente_cadastro() {
@@ -14,6 +15,8 @@ export default function Paciente_cadastro() {
     const [senha, setSenha] = useState('');
     const [nascimento, setNascimento] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { login } = UseAuth();
 
     const navigate = useNavigate();
 
@@ -41,7 +44,7 @@ export default function Paciente_cadastro() {
 
             const usuarioRetornado = response.data.usuario;
             login(usuarioRetornado);
-            navigate('/');
+            navigate('/paciente/agendar-consulta');
 
         } catch (error) {
             console.error('❌ Erro de conexão com servidor:', error);
@@ -57,6 +60,7 @@ export default function Paciente_cadastro() {
 
 
             <div className="box-inputs">
+
                 <div className="header">
                     <div className="voltar">
 
@@ -69,6 +73,7 @@ export default function Paciente_cadastro() {
                         </h1>
                     </div>
                 </div>
+                
                 <form>
                     <label><span>*</span>Nome</label>
                     <input type="name"

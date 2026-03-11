@@ -55,7 +55,7 @@
                     font-size: 1rem;
                     border-radius: 7px;
                     color: #fff;
-                    background-color: var(--nCor2);
+                    background-color: var(--text-main);
                 }
             }
 
@@ -64,7 +64,7 @@
                 flex-direction: column;
                 font-size: 16px;
                 font-weight: 500;
-                color: var(--nCor1);
+                color: var(--bg-card);
 
                 .profissao {
                     font-weight: 500;
@@ -85,8 +85,8 @@
                 height: 25px;
                 width: 25px;
 
-                background: var(--nCor2);
-                color: var(--title2);
+                background: var(--text-main);
+                color: var(--bg-card);
 
                 display: flex;
                 align-items: center;
@@ -110,14 +110,15 @@
                     align-items: center;
                     width: 100%;
                     border-radius: 8px;
-                    border: 1px solid var(--nCor5);
+                    outline: none;
+                    border: 1px solid var(--border-color);
                     transition: all 0.25s ease;
                     gap: 20px;
 
 
 
                     &:hover{
-                        background: var(--nCor2);
+                        background: var(--text-main);
                     }
                 }
             }

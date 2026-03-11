@@ -1,99 +1,123 @@
-.cadastro {
+:root {
+    /* Paleta de Cores Moderna */
+    --primary: #4f46e5;
+    /* Índigo principal */
+    --primary-hover: #4338ca;
+    --primary-light: #eef2ff;
+    --success: #10b981;
+    /* Verde sucesso */
+    --success-hover: #059669;
+    --success-light: #d1fae5;
+    --danger: #ef4444;
+    /* Vermelho erro */
+    --danger-light: #fee2e2;
 
-    .container-cadastro-med {
+    --text-main: #111827;
+    /* Quase preto para títulos */
+    --text-muted: #6b7280;
+    /* Cinza para textos secundários */
+
+    --bg-page: #f3f4f6;
+    /* Fundo da página */
+    --bg-card: #ffffff;
+    /* Fundo dos cards */
+    --border-color: #e5e7eb;
+    /* Bordas sutis */
+}
+
+.container-cadastro-nutri {
+    max-width: 1000px;
+    min-height: 100vh;
+
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: "Inter", sans-serif;
+    background: var(--bg-card);
+
+    @media (max-width: 769px) {
+        padding: 0;
+
+    }
+
+
+    .box-inputs {
         display: flex;
-        justify-content: center;
-        width: 70%;
-        box-shadow: 0px 0px 15px #18181d40;
-        border-radius: 25px;
-        border: 1px solid #117124;
+        flex-direction: column;
 
+        padding: 15px;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 7px;
 
-        .box-title-med {
+        @media (max-width:890px) {
+            border: none;
+        }
+
+        .header {
+            position: relative;
             display: flex;
-            flex-direction: column;
-            background-color: #20d945;
-            border-bottom-left-radius: 25px;
-            border-top-left-radius: 25px;
-            width: 50%;
-            gap: 150px;
-            padding: 15px;
+            padding: 7px;
+            border-radius: 7px;
 
             .voltar {
-                display: flex;
-                justify-content: flex-start;
+
+                button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 8px;
+                    font-size: 12px;
+                    justify-content: flex-start;
+                    background-color: var(--bg-card);
+                    color: var(--text-main);
+
+                    p {
+                        font-size: 16px;
+                    }
+
+                    &:hover {
+                        transform: scale(1.105);
+                    }
+                }
             }
 
-            button {
+            .title {
+
+                position: absolute;
+                right: 40%;
                 display: flex;
                 justify-content: center;
-                border-radius: 25px;
-                gap: 5px;
-                color: #18181d80;
-                transition: all 0.3s;
-
-                p {
-                    font-size: 16px;
-                }
-
-                &:hover {
-                    color: #ffffff;
-                    transform: scale(1.105);
-                }
-            }
-
-
-
-            .banner-cadastro-med {
-
-                color: #fff;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
                 align-items: center;
-                gap: 12px;
 
-                i {
-                    color: #fff;
+                @media (max-width: 769px) {
+                    right: 20%;
+
                 }
 
                 h1 {
-                    font-family: 'Sofia Sans', sans-serif;
-                    font-size: 3.2rem;
-                }
+                    display: flex;
+                    gap: 10px;
+                    font-size: 1.5rem;
 
-                p {
-                    font-size: 18px;
-                    max-width: 400px;
-                    color: #fff;
-                }
+                    @media (max-width: 769px) {
+                        font-size: 1.2rem;
 
-                .info {
-                    font-size: 14px;
-                    max-width: 360px;
-                    color: #e2e2e2;
+                    }
                 }
             }
         }
-    }
-
-    .box-inputs-med {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        width: 50%;
-        padding: 35px;
-        background-color: #fff;
-        border-bottom-right-radius: 25px;
-        border-top-right-radius: 25px;
 
         form {
+            padding: 1.5rem 6rem 1.5rem;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            width: 70%;
             gap: 4px;
+            
+            @media (max-width:500px) {
+                padding: 1.5rem 1.8rem 1.5rem;
+                
+            }
 
             label {
                 color: #18181d;
@@ -102,7 +126,7 @@
                 font-family: 'Open Sans', sans-serif;
 
                 span {
-                    color: brown;
+                    color: var(--danger);
                 }
             }
 
@@ -110,9 +134,9 @@
                 padding: 8px 15px;
                 border-radius: 6px;
                 background-color: transparent;
-                border: 1px solid #ccc;
-                font-family: 'Open sans', sans-serif;
-                color: #18181d;
+                border: 1px solid var(--border-color);
+                font-family: "Open sans", sans-serif;
+                color: var(--text-main);
                 font-size: 15px;
                 width: 100%;
                 margin-bottom: 12px;
@@ -132,7 +156,7 @@
 
             }
 
-            .crn{
+            .crn {
                 display: flex;
                 gap: 4px;
             }
@@ -155,7 +179,7 @@
             margin-top: 22px;
 
             p {
-                color: #18181d;
+                color: var(--text-main);
 
                 a {
                     color: #20d945;

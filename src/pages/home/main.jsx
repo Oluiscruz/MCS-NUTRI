@@ -27,7 +27,7 @@ export default function Main() {
                     {usuario.tipo === "paciente" ? (
                         <>
                             <div className="frase">
-                                <h1>Olá {usuario.nome}</h1>
+                                <h1>Olá, {usuario.nome}</h1>
                             </div>
                             <div className="content-info">
                                 <div className="title">
@@ -69,10 +69,10 @@ export default function Main() {
 
                             </div>
                         </>
-                    ) : usuario.tipo === "nutricionista"(
+                    ) : usuario.tipo === "nutricionista" ? (
                         <>
                             <div className="frase">
-                                <h1>Bem Vinda Doutora</h1>
+                                <h1>Bem Vinda, Doutora</h1>
                             </div>
                             <div className="content-info">
                                 <div className="title">
@@ -85,7 +85,6 @@ export default function Main() {
                                         <button onClick={agenda}>
                                             Agendar Consulta
                                         </button>
-
                                     </div>
                                 </div>
 
@@ -110,10 +109,14 @@ export default function Main() {
                                         </a>
                                     </div>
                                 </div>
-
-
                             </div>
                         </>
+                    ) : (
+                        <div className="start">
+                            <button onClick={entrar}>
+                                Agendar Consulta
+                            </button>
+                        </div>
                     )}
                 </div>
 

@@ -59,7 +59,7 @@ export default function Nutricionista_login() {
 
 
     return (
-        <div className='login'>
+        <div className='login-nutri'>
 
             <div className="container-login">
                 <div className="voltar-home">

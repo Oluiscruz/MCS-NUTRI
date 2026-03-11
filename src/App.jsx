@@ -7,15 +7,15 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const alreadyVisited = localStorage.getItem('welcome');
 
-    if (!alreadyVisited) 
+    if (!alreadyVisited) {
+      setShowModal(true);
       localStorage.setItem('welcome', 'true');
-
-    setShowModal(true);
+    }
   }, []);
 
   const fecharModal = () => {
@@ -34,7 +34,7 @@ const navigate = useNavigate();
         <div className="modal-overlay" onClick={fecharModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="btn-fechar">
-              <button onClick={() => setShowModal(false)}><Minimize2 size={18}/></button>
+              <button onClick={() => setShowModal(false)}><Minimize2 size={18} /></button>
             </div>
 
             <div className="modal-msg">
