@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { UseAuth } from '../../context/context';
+import '../../styles/perfil-paciente/agendarConsulta.scss'
 
 export default function GoogleCallback() {
     
     const [searchParams] = useSearchParams();
     const { login } = UseAuth();
-    const navigate = useNavigate();
-    const [error, setError] = useState(null);
+    const hasProcessed = useRef(false);
 
     useEffect(() => {
+        if (hasProcessed.current) return;
+        hasProcessed.current = true;
+
         const userParam = searchParams.get('user');
         const redirectTo = searchParams.get('redirectTo');
-
-        const safeNavigate = (path) => navigate(path, { replace: true });
 
         if (userParam) {
             try {
@@ -23,42 +24,32 @@ export default function GoogleCallback() {
                     throw new Error('Dados do usuário inválidos');
                 }
 
-                // Atualiza contexto imediatamente
                 login(userData);
 
-                // Determina destino do redirecionamento
                 let target = '/paciente/agendar-consulta';
                 if (redirectTo) {
                     target = redirectTo;
-                } else if (userData.role) {
-                    if (userData.role === 'nutri') target = '/perfil-nutri/nutri';
-                    else if (userData.role === 'paciente') target = '/paciente/agendar-consulta';
+                    
+                } else if (userData.role === 'nutri') {
+                    target = '/perfil-nutri/nutri';
                 }
 
-                // Mantém o spinner visível por um breve instante antes de redirecionar
-                setTimeout(() => {
-                    // Navegação completa com recarregamento para garantir o estado atualizado
-                    try {
-                        window.location.replace(target);
-                    } catch (e) {
-                        // Fallback para SPA navigation se replace falhar
-                        safeNavigate(target);
-                    }
-                }, 700);
+                window.location.replace(target);
 
             } catch (err) {
                 console.error('Erro ao processar dados do usuário:', err);
-                setError('Erro ao processar login. Tente novamente.');
-                setTimeout(() => safeNavigate('/paciente/login?erro=true'), 1500);
+                window.location.replace('/paciente/login?erro=true');
             }
         } else {
-            setError('Nenhum dado de usuário recebido');
-            setTimeout(() => safeNavigate('/paciente/login?erro=true'), 1500);
+            window.location.replace('/paciente/login?erro=true');
         }
-    }, [searchParams, login, navigate]);
+    }, [searchParams, login]);
 
 
     return (
-        <></>
+        <div className="empty-state" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div className="spinner"></div>
+            <div>Processando login...</div>
+        </div>
     )
 }
