@@ -1,0 +1,137 @@
+.container-dados-paciente {
+  max-width: 720px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  background: var(--bg-card);
+
+  .topbar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+
+    .btn-nav {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: var(--bg-page);
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .header-dados {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    h1 {
+      font-size: 2rem;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+  }
+
+  .mensagem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    margin: 1rem auto 1.5rem;
+    max-width: 520px;
+
+    &.ok {
+      background: var(--success-light);
+      color: #064e3b;
+      border-color: #a7f3d0;
+    }
+
+    &.erro {
+      background: var(--danger-light);
+      color: #7f1d1d;
+      border-color: #fecaca;
+    }
+  }
+
+  .form-dados {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+
+    label {
+      font-weight: 700;
+      color: var(--text-main);
+
+      span {
+        color: var(--danger);
+        margin-right: 0.2rem;
+      }
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      }
+    }
+
+    .btn-salvar {
+      margin-top: 0.75rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+}
+

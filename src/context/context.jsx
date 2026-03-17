@@ -23,6 +23,15 @@ export function AuthProvider({ children }) {
         setUsuario(dadosUsuario);
     }
 
+    // Atualiza dados parciais do usuário logado (ex.: telefone/sexo).
+    const updateUsuario = (partial) => {
+        setUsuario((prev) => {
+            const next = { ...(prev || {}), ...(partial || {}) };
+            localStorage.setItem('usuario_logado', JSON.stringify(next));
+            return next;
+        });
+    };
+
     // Função de logout:
     const logout = () => {
         localStorage.removeItem('usuario_logado');
@@ -30,7 +39,7 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AppContext.Provider value={{ usuario, login, logout }}>
+        <AppContext.Provider value={{ usuario, login, logout, updateUsuario }}>
             {children}
         </AppContext.Provider>
     );

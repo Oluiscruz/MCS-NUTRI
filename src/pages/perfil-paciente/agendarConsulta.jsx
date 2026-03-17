@@ -24,6 +24,9 @@ export default function AgendarConsulta() {
     const { usuario, logout } = UseAuth();
     const navigate = useNavigate();
 
+    const sexoValido = usuario?.sexo === "M" || usuario?.sexo === "F" || usuario?.sexo === "Outro";
+    const faltaInfo = !usuario?.telefone || !sexoValido;
+
     useEffect(() => {
         async function fetchNutricionistas() {
             try {
@@ -169,6 +172,10 @@ export default function AgendarConsulta() {
 
     const handleConfirmar = async () => {
         if (!dataSelecionada || !horarioEscolhido) return;
+        if (faltaInfo) {
+            setErro('Para agendar, complete seu telefone e sexo.');
+            return;
+        }
         setLoading(true);
 
         try {
@@ -218,6 +225,17 @@ export default function AgendarConsulta() {
                     <em>O preenchimento da ficha médica é opcional.</em>
                 </div>
 
+                {faltaInfo && (
+                    <div className="alert-falta-info">
+                        <div className="alert-text">
+                            <strong>Antes de agendar:</strong> complete seu <span>telefone</span> e <span>sexo</span>.
+                        </div>
+                        <button className="btn-completar" onClick={() => navigate('/paciente/dados')}>
+                            Completar dados
+                        </button>
+                    </div>
+                )}
+
                 <div className="select-nutricionista">
                     <label>Selecione um profissional e preencha sua ficha</label>
                     <div className="select-wrapper">
@@ -240,6 +258,11 @@ export default function AgendarConsulta() {
                         </select>
                         <div className="ficha-paciente">
                             <button onClick={ficha}><ClipboardClock size={20} /> Preencher ficha</button>
+                        </div>
+                        <div className="dados-paciente">
+                            <button onClick={() => navigate('/paciente/dados')}>
+                                Editar dados
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -309,7 +332,7 @@ export default function AgendarConsulta() {
                             <div className="info-box">
                                 <p>Sua consulta será no dia <strong>{dataSelecionada.toLocaleDateString('pt-BR')}</strong> às <strong>{horarioEscolhido}</strong>.</p>
                             </div>
-                            <button className="btn-confirmar" onClick={handleConfirmar} disabled={loading}>
+                            <button className="btn-confirmar" onClick={handleConfirmar} disabled={loading || faltaInfo}>
                                 {loading ? 'Confirmando...' : 'Confirmar Agendamento'}
                             </button>
                         </div>

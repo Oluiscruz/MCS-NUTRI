@@ -17,6 +17,7 @@ import CRNValidacao from './pages/cadastro/verificacao/crn_validacao.jsx';
 import VisualizarPacientes from './pages/perfil-nutri/visualizar-pacientes/vizualizar-pacientes.jsx';
 import HistoricoConsultas from './pages/perfil-nutri/visualizar-pacientes/historico.jsx';
 import FichaPaciente from './pages/perfil-paciente/Ficha-paciente.jsx';
+import DadosPaciente from './pages/perfil-paciente/dados-paciente.jsx';
 
 import './styles/index.scss'
 
@@ -39,6 +40,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/nutricionista/agenda" element={<Agenda />} />
           <Route path="/paciente/agendar-consulta" element={<AgendarConsulta />} />
           <Route path="/paciente/ficha" element={<FichaPaciente />} />
+          <Route path="/paciente/dados" element={<DadosPaciente />} />
           <Route path="/auth/callback" element={<GoogleCallback />} />
           <Route path="/cadastro/crn-validacao" element={<CRNValidacao />} />
           <Route path="/nutricionista/visualizar-pacientes" element={<VisualizarPacientes />} />
