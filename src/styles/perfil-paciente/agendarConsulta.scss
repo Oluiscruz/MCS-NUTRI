@@ -247,13 +247,37 @@
 
     /* Layout Principal em Grid */
     .content-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
         margin-bottom: 4rem;
 
-        @media (max-width: 768px) {
-            grid-template-columns: 1fr;
+        .swiper {
+            padding-bottom: 2.5rem;
+
+            .swiper-button-next,
+            .swiper-button-prev {
+                color: var(--primary-hover);
+
+                @media (max-width: 920px) {
+                    display: none !important;
+                }
+            }
+
+            .swiper-slide {
+                height: auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .swiper-pagination-bullet {
+                background: var(--primary);
+                opacity: 0.5;
+                width: 10px;
+                height: 10px;
+            }
+
+            .swiper-pagination-bullet-active {
+                opacity: 1;
+                background: var(--primary);
+            }
         }
     }
 

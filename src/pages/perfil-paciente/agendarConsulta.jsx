@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UseAuth } from "../../context/context";
 import { Calendar } from 'react-calendar';
 import { ArrowLeft, Calendar as CalendarIcon, Clock, LogOut, UserCircle, CheckCircle, ClipboardClock } from 'lucide-react';
+import { Swiper, SwiperSlide } from "swiper/react"; // biblioteca de sildes
+import { EffectFade, EffectCoverflow, Navigation } from "swiper/modules"; // efeitos
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import '../../styles/react-calendar.css'
 import '../../styles/perfil-paciente/agendarConsulta.scss';
 
@@ -20,6 +25,7 @@ export default function AgendarConsulta() {
     const [loading, setLoading] = useState(false);
     const [loadingAgenda, setLoadingAgenda] = useState(false);
     const [horariosFixos, setHorariosFixos] = useState([]);
+    const swiperRef = useRef(null);
 
     const { usuario, logout } = UseAuth();
     const navigate = useNavigate();
@@ -110,6 +116,9 @@ export default function AgendarConsulta() {
     const handleCalendario = (date) => {
         setDataSelecionada(date);
         setHorarioEscolhido(null);
+        if (swiperRef.current) {
+            swiperRef.current.slideTo(1);
+        }
 
         const diaSemana = date.getDay();
         const diaNum = date.getDate();
@@ -271,73 +280,89 @@ export default function AgendarConsulta() {
             </header>
 
             <div className="content-grid">
-                {/* Coluna Esquerda: Calendário */}
-                <div className="card card-calendario">
-                    <div className="card-header">
-                        <CalendarIcon size={20} className="icon-primary" />
-                        <h3>Escolha a Data</h3>
-                    </div>
-
-                    {!nutriSelecionado ? (
-                        <div className="empty-state">
-                            <p>👆 Selecione um profissional acima para visualizar o calendário.</p>
-                        </div>
-                    ) : loadingAgenda ? (
-                        <div className="empty-state">
-                            <div className="spinner"></div>
-                            <p>Carregando agenda...</p>
-                        </div>
-                    ) : (
-                        <Calendar
-                            onChange={handleCalendario}
-                            value={dataSelecionada}
-                            tileDisabled={diasIndisponiveis}
-                            minDate={new Date()}
-                            className="custom-calendar"
-                        />
-                    )}
-                </div>
-
-                {/* Coluna Direita: Horários */}
-                <div className="card card-horarios">
-                    <div className="card-header">
-                        <Clock size={20} className="icon-primary" />
-                        <h3>Escolha o Horário</h3>
-                    </div>
-
-                    {!dataSelecionada ? (
-                        <div className="empty-state">
-                            <p>Selecione um dia disponível no calendário para ver os horários.</p>
-                        </div>
-                    ) : horariosGerados.length === 0 ? (
-                        <div className="empty-state">
-                            <p>Não há horários disponíveis para esta data.</p>
-                        </div>
-                    ) : (
-                        <div className="grid-botoes">
-                            {horariosGerados.map((horario) => (
-                                <button
-                                    key={horario}
-                                    className={`btn-horario ${horarioEscolhido === horario ? 'selected' : ''}`}
-                                    onClick={() => setHorarioEscolhido(horario)}
-                                >
-                                    {horario}
-                                </button>
-                            ))}
-                        </div>
-                    )}
-
-                    {horarioEscolhido && (
-                        <div className="resumo-confirmacao slide-up">
-                            <div className="info-box">
-                                <p>Sua consulta será no dia <strong>{dataSelecionada.toLocaleDateString('pt-BR')}</strong> às <strong>{horarioEscolhido}</strong>.</p>
+                <Swiper
+                    navigation={true}
+                    modules={[Navigation, EffectCoverflow, EffectFade]}
+                    spaceBetween={20}
+                    pagination={{ clickable: true }}
+                    onSwiper={(swiper) => { swiperRef.current = swiper; }}
+                    breakpoints={{
+                        0: { slidesPerView: 1 },
+                        900: { slidesPerView: 2 }
+                    }}
+                >
+                    {/* Coluna Esquerda: Calendário */}
+                    <SwiperSlide>
+                        <div className="card card-calendario">
+                            <div className="card-header">
+                                <CalendarIcon size={20} className="icon-primary" />
+                                <h3>Escolha a Data</h3>
                             </div>
-                            <button className="btn-confirmar" onClick={handleConfirmar} disabled={loading || faltaInfo}>
-                                {loading ? 'Confirmando...' : 'Confirmar Agendamento'}
-                            </button>
+
+                            {!nutriSelecionado ? (
+                                <div className="empty-state">
+                                    <p>👆 Selecione um profissional acima para visualizar o calendário.</p>
+                                </div>
+                            ) : loadingAgenda ? (
+                                <div className="empty-state">
+                                    <div className="spinner"></div>
+                                    <p>Carregando agenda...</p>
+                                </div>
+                            ) : (
+                                <Calendar
+                                    onChange={handleCalendario}
+                                    value={dataSelecionada}
+                                    tileDisabled={diasIndisponiveis}
+                                    minDate={new Date()}
+                                    className="custom-calendar"
+                                />
+                            )}
                         </div>
-                    )}
-                </div>
+                    </SwiperSlide>
+
+                    {/* Coluna Direita: Horários */}
+                    <SwiperSlide>
+                        <div className="card card-horarios">
+                            <div className="card-header">
+                                <Clock size={20} className="icon-primary" />
+                                <h3>Escolha o Horário</h3>
+                            </div>
+
+                            {!dataSelecionada ? (
+                                <div className="empty-state">
+                                    <p>Selecione um dia disponível no calendário para ver os horários.</p>
+                                </div>
+                            ) : horariosGerados.length === 0 ? (
+                                <div className="empty-state">
+                                    <p>Não há horários disponíveis para esta data.</p>
+                                </div>
+                            ) : (
+                                <div className="grid-botoes">
+                                    {horariosGerados.map((horario) => (
+                                        <button
+                                            key={horario}
+                                            className={`btn-horario ${horarioEscolhido === horario ? 'selected' : ''}`}
+                                            onClick={() => setHorarioEscolhido(horario)}
+                                        >
+                                            {horario}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+
+                            {horarioEscolhido && (
+                                <div className="resumo-confirmacao slide-up">
+                                    <div className="info-box">
+                                        <p>Sua consulta será no dia <strong>{dataSelecionada.toLocaleDateString('pt-BR')}</strong> às <strong>{horarioEscolhido}</strong>.</p>
+                                    </div>
+                                    <button className="btn-confirmar" onClick={handleConfirmar} disabled={loading || faltaInfo}>
+                                        {loading ? 'Confirmando...' : 'Confirmar Agendamento'}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
             </div>
 
             {/* Modal de Sucesso */}
